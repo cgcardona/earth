@@ -1,6 +1,10 @@
 # EARTH
 
 ```rust
+    use chain::{Block, BlockHeader, Transaction, Vin, Vout};
+    use std::time::SystemTime;
+    use util::calculate_hash;
+
     let version: u32 = 1;
     let bits: u32 = 1;
     let nonce: u32 = 1;
