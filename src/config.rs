@@ -7,15 +7,18 @@ use std::hash::{Hash, Hasher};
 // use primitives::hash::H256;
 // use rpc::HttpConfiguration as RpcHttpConfig;
 // use rpc_apis::ApiSet;
-// use seednodes::{
-//     bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes, mainnet_seednodes, testnet_seednodes,
-// };
+use crate::seednodes::{
+    bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes, mainnet_seednodes, testnet_seednodes,
+};
 use std::net;
 // use storage;
 // use sync::VerificationParameters;
 // use super::util::open_db;
 // use verification::VerificationLevel;
-// use {REGTEST_USER_AGENT, USER_AGENT};
+
+// TODO -  Why don't these consts work across libs/mods?
+pub const USER_AGENT: &'static str = "earth";
+pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
 
 pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
     let mut s = DefaultHasher::new();
@@ -26,13 +29,12 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 #[derive(Debug)]
 pub struct Config {
     // pub services: Services,
-    // pub connect: Option<net::SocketAddr>,
-    // pub seednodes: Vec<String>,
-    // pub user_agent: String,
     // pub internet_protocol: InternetProtocol,
     // pub rpc_config: RpcHttpConfig,
     // pub verification_params: VerificationParameters,
     // pub db: storage::SharedStore,
+    pub seednodes: Vec<String>,
+    pub connect: Option<net::SocketAddr>,
     pub consensus: ConsensusParams,
     pub block_notify_command: Option<String>,
     pub host: net::IpAddr,
@@ -43,8 +45,6 @@ pub struct Config {
     pub db_cache: usize,
     pub network: Network,
     pub services: String,
-    pub connect: String,
-    pub seednodes: String,
     pub quiet: bool,
     pub data_dir: Option<String>,
     pub user_agent: String,
@@ -93,57 +93,57 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         Network::Regtest | Network::Unitest => 1,
     };
 
-    // // to skip idiotic 30 seconds delay in test-scripts
-    // let user_agent_suffix = match consensus.fork {
-    //     ConsensusFork::BitcoinCore => "",
-    //     ConsensusFork::BitcoinCash(_) => "/UAHF",
-    // };
-    // let user_agent = match network {
-    //     Network::Testnet | Network::Mainnet | Network::Unitest | Network::Other(_) => {
-    //         format!("{}{}", USER_AGENT, user_agent_suffix)
-    //     }
-    //     Network::Regtest => REGTEST_USER_AGENT.into(),
-    // };
+    // to skip idiotic 30 seconds delay in test-scripts
+    let user_agent_suffix: &str = match consensus.fork {
+        ConsensusFork::BitcoinCore => "",
+        ConsensusFork::BitcoinCash(_) => "/UAHF",
+    };
+    let user_agent: String = match network {
+        Network::Testnet | Network::Mainnet | Network::Unitest | Network::Other(_) => {
+            format!("{}{}", USER_AGENT, user_agent_suffix)
+        }
+        Network::Regtest => REGTEST_USER_AGENT.into(),
+    };
 
     let port: u16 = match matches.value_of("port") {
         Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,
         None => network.port(),
     };
 
-    // let connect = match matches.value_of("connect") {
-    //     Some(s) => Some(match s.parse::<net::SocketAddr>() {
-    //         Err(_) => s
-    //             .parse::<net::IpAddr>()
-    //             .map(|ip| net::SocketAddr::new(ip, network.port()))
-    //             .map_err(|_| "Invalid connect".to_owned()),
-    //         Ok(a) => Ok(a),
-    //     }?),
-    //     None => None,
-    // };
+    let connect: Option<net::SocketAddr> = match matches.value_of("connect") {
+        Some(s) => Some(match s.parse::<net::SocketAddr>() {
+            Err(_) => s
+                .parse::<net::IpAddr>()
+                .map(|ip| net::SocketAddr::new(ip, network.port()))
+                .map_err(|_| "Invalid connect".to_owned()),
+            Ok(a) => Ok(a),
+        }?),
+        None => None,
+    };
 
-    // let seednodes: Vec<String> = match matches.value_of("seednode") {
-    //     Some(s) => vec![s.parse().map_err(|_| "Invalid seednode".to_owned())?],
-    //     None => match (network, &consensus.fork) {
-    //         (Network::Mainnet, &ConsensusFork::BitcoinCash(_)) => bitcoin_cash_seednodes()
-    //             .into_iter()
-    //             .map(Into::into)
-    //             .collect(),
-    //         (Network::Testnet, &ConsensusFork::BitcoinCash(_)) => bitcoin_cash_testnet_seednodes()
-    //             .into_iter()
-    //             .map(Into::into)
-    //             .collect(),
-    //         (Network::Mainnet, _) => mainnet_seednodes().into_iter().map(Into::into).collect(),
-    //         (Network::Testnet, _) => testnet_seednodes().into_iter().map(Into::into).collect(),
-    //         (Network::Other(_), _) | (Network::Regtest, _) | (Network::Unitest, _) => Vec::new(),
-    //     },
-    // };
+    let seednodes: Vec<String> = match matches.value_of("seednode") {
+        Some(s) => vec![s.parse().map_err(|_| "Invalid seednode".to_owned())?],
+        None => match (network, &consensus.fork) {
+            (Network::Mainnet, &ConsensusFork::BitcoinCash(_)) => bitcoin_cash_seednodes()
+                .into_iter()
+                .map(Into::into)
+                .collect(),
+            (Network::Testnet, &ConsensusFork::BitcoinCash(_)) => bitcoin_cash_testnet_seednodes()
+                .into_iter()
+                .map(Into::into)
+                .collect(),
+            (Network::Mainnet, _) => mainnet_seednodes().into_iter().map(Into::into).collect(),
+            (Network::Testnet, _) => testnet_seednodes().into_iter().map(Into::into).collect(),
+            (Network::Other(_), _) | (Network::Regtest, _) | (Network::Unitest, _) => Vec::new(),
+        },
+    };
 
-    let only_net = match matches.value_of("only-net") {
+    let only_net: p2p::InternetProtocol = match matches.value_of("only-net") {
         Some(s) => s.parse()?,
         None => InternetProtocol::default(),
     };
 
-    let host = match matches.value_of("host") {
+    let host: std::net::IpAddr = match matches.value_of("host") {
         Some(s) => s
             .parse::<net::IpAddr>()
             .map_err(|_| "Invalid host".to_owned())?,
@@ -214,9 +214,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
 
     // Ok(config)
     let services: String = String::from("services");
-    let connect: String = String::from("connect");
-    let seednodes: String = String::from("seednodes");
-    let user_agent: String = String::from("user_agent");
     let internet_protocol: String = String::from("internet_protocol");
     let rpc_config: String = String::from("rpc_config");
     let verification_params: String = String::from("verification_params");
