@@ -1,14 +1,16 @@
 use chain::{Block, BlockHeader, Transaction, Vin, Vout};
 use std::time::SystemTime;
+use util::calculate_hash;
 
 fn main() {
     let version: u32 = 1;
     let bits: u32 = 1;
     let nonce: u32 = 1;
-    let merkle_root_hash: u32 = 1;
-    let prev_header_hash: u32 = 1;
+    let merkle_root_hash: u64 = 1;
+    let prev_header_hash: u64 = 1;
     let time: SystemTime = SystemTime::now();
-    let block_header: BlockHeader = BlockHeader::new(
+
+    let prev_block_header: BlockHeader = BlockHeader::new(
         version,
         bits,
         nonce,
@@ -17,12 +19,26 @@ fn main() {
         time,
     );
 
-    let txid: String = String::from("hello world");
+    let prev_header_hash: u64 = calculate_hash(&prev_block_header);
+    let merkle_root_hash: u64 = calculate_hash(&prev_block_header);
+    let block_header: BlockHeader = BlockHeader::new(
+        version,
+        bits,
+        nonce,
+        merkle_root_hash,
+        prev_header_hash,
+        time,
+    );
+    println!("{}", calculate_hash(&block_header));
+
+    let txid: String =
+        String::from("fe28050b93faea61fa88c4c630f0e1f0a1c24d0082dd0e10d369e13212128f33");
     let version: u32 = 1;
     let locktime: u32 = 1;
     let vin: Vec<Vin> = vec![];
     let vout: Vec<Vout> = vec![];
-    let blockhash: String = String::from("hello world");
+    let blockhash: String =
+        String::from("00000000c937983704a73af28acdec37b049d214adbda81d7e2a3dd146f6ed09");
     let blockheight: u32 = 1;
     let confirmations: u32 = 1;
     let time: SystemTime = SystemTime::now();

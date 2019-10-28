@@ -1,12 +1,12 @@
 use std::time::SystemTime;
 
-#[derive(Debug)]
+#[derive(Debug, Hash)]
 pub struct BlockHeader {
     version: u32,
     bits: u32,
     nonce: u32,
-    merkle_root_hash: u32,
-    prev_header_hash: u32,
+    merkle_root_hash: u64,
+    prev_header_hash: u64,
     time: SystemTime,
 }
 
@@ -15,8 +15,8 @@ impl BlockHeader {
         version: u32,
         bits: u32,
         nonce: u32,
-        merkle_root_hash: u32,
-        prev_header_hash: u32,
+        merkle_root_hash: u64,
+        prev_header_hash: u64,
         time: SystemTime,
     ) -> BlockHeader {
         BlockHeader {
@@ -41,11 +41,11 @@ impl BlockHeader {
         &self.nonce
     }
 
-    pub fn merkle_root_hash(&self) -> &u32 {
+    pub fn merkle_root_hash(&self) -> &u64 {
         &self.merkle_root_hash
     }
 
-    pub fn prev_header_hash(&self) -> &u32 {
+    pub fn prev_header_hash(&self) -> &u64 {
         &self.prev_header_hash
     }
 

@@ -9,5 +9,10 @@ name = "libs"
 version = "0.1.0"
 dependencies = [
  "chain 0.1.0",
+ "util 0.1.0",
 ]
+
+[[package]]
+name = "util"
+version = "0.1.0"
 

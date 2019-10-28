@@ -7,8 +7,8 @@ Adventures in crypto
 let version: u32 = 1;
 let bits: u32 = 1;
 let nonce: u32 = 1;
-let merkle_root_hash: u32 = 1;
-let prev_header_hash: u32 = 1;
+let merkle_root_hash: Hash = 1;
+let prev_header_hash: Hash = 1;
 let time: SystemTime = SystemTime::now();
 let block_header: BlockHeader = BlockHeader::new(
     version,
