@@ -1,6 +1,7 @@
 # EARTH
 
 ```rust
+    start();
     use chain::{Block, BlockHeader, Transaction, Vin, Vout};
     use std::time::SystemTime;
     use util::calculate_hash;
