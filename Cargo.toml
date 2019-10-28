@@ -1,5 +1,5 @@
 [package]
-name = "EARTH"
+name = "earth"
 version = "0.1.0"
 authors = ["Gabriel Cardona <cgcardona@gmail.com>"]
 edition = "2018"
@@ -15,4 +15,3 @@ chain = { path = "chain" }
 util = { path = "util" }
 commands = { path = "commands" }
 p2p = { path = "p2p" }
-network = { path = "network" }

@@ -1,18 +1,22 @@
-use network::Network;
-use p2p::InternetProtocol;
+// use consensus::Network;
+// use p2p::InternetProtocol;
 use serde_derive::Deserialize;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::net;
 
+// TODO : Call these from src/main.rs
+pub const USER_AGENT: &'static str = "earth";
+pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
+
 #[derive(Deserialize, Debug)]
 pub struct Config {
-    pub network: Network,
+    // pub network: Network,
     // pub consensus: ConsensusParams,
     // pub services: Services,
-    pub port: u16,
+    // pub port: u16,
     // pub connect: Option<net::SocketAddr>,
-    pub host: net::IpAddr,
+    // pub host: net::IpAddr,
     // pub seednodes: Vec<String>,
     pub quiet: bool,
     // pub inbound_connections: u32,
@@ -50,39 +54,46 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     };
 
     let quiet = matches.is_present("quiet");
-    let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
-        (true, false) => Network::Testnet,
-        (false, true) => Network::Regtest,
-        (false, false) => Network::Testnet,
-        (true, true) => return Err("Only one testnet option can be used".into()),
-    };
+    // let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
+    //     (true, false) => Network::Testnet,
+    //     (false, true) => Network::Regtest,
+    //     (false, false) => Network::Testnet,
+    //     (true, true) => return Err("Only one testnet option can be used".into()),
+    // };
 
-    let port = match matches.value_of("port") {
-        Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,
-        None => network.port(),
-    };
+    // let port = match matches.value_of("port") {
+    //     Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,
+    //     None => network.port(),
+    // };
 
-    let only_net = match matches.value_of("only-net") {
-        Some(s) => s.parse()?,
-        None => InternetProtocol::default(),
-    };
+    // let only_net = match matches.value_of("only-net") {
+    //     Some(s) => s.parse()?,
+    //     None => InternetProtocol::default(),
+    // };
 
-    let host = match matches.value_of("host") {
-        Some(s) => s
-            .parse::<net::IpAddr>()
-            .map_err(|_| "Invalid host".to_owned())?,
-        None => match only_net {
-            InternetProtocol::IpV6 => "::".parse().unwrap(),
-            _ => "0.0.0.0".parse().unwrap(),
-        },
-    };
+    // let host = match matches.value_of("host") {
+    //     Some(s) => s
+    //         .parse::<net::IpAddr>()
+    //         .map_err(|_| "Invalid host".to_owned())?,
+    //     None => match only_net {
+    //         InternetProtocol::IpV6 => "::".parse().unwrap(),
+    //         _ => "0.0.0.0".parse().unwrap(),
+    //     },
+    // };
+    // let user_agent = match network {
+    //     Network::Testnet | Network::Mainnet | Network::Unitest | Network::Other(_) => {
+    //         format!("{}", USER_AGENT)
+    //     }
+    //     Network::Regtest => REGTEST_USER_AGENT.into(),
+    // };
 
     Ok(Config {
-        port: port,
+        // port: port,
         quiet: quiet,
         db_cache: db_cache,
         data_dir: data_dir,
-        network: network,
-        host: host,
+        // network: network,
+        // host: host,
+        // user_agent: user_agent,
     })
 }

@@ -40,20 +40,3 @@ impl InternetProtocol {
         }
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::InternetProtocol;
-
-    #[test]
-    fn test_default_internet_protocol() {
-        assert_eq!(InternetProtocol::default(), InternetProtocol::Any);
-    }
-
-    #[test]
-    fn test_parsing_internet_protocol() {
-        assert_eq!(InternetProtocol::IpV4, "ipv4".parse().unwrap());
-        assert_eq!(InternetProtocol::IpV6, "ipv6".parse().unwrap());
-        assert!("sa".parse::<InternetProtocol>().is_err());
-    }
-}

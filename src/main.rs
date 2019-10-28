@@ -6,17 +6,15 @@ use commands::start;
 use std::time::SystemTime;
 use util::{calculate_hash, parse};
 
+pub const USER_AGENT: &'static str = "earth";
+pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
+
 fn main() {
     let yml = load_yaml!("cli.yml");
     let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
     let cfg = parse(&matches);
-
-    // let contents = fs::read_to_string("cli.toml").expect("Something went wrong reading the file");
-    // let s: String = contents.to_owned();
-    // let s_slice: &str = &s[..]; // take a full slice of the string
-    // let config: Config = toml::from_str(s_slice).unwrap();
-
     println!("MATCHES: {:#?}", cfg);
+
     start();
     let version: u32 = 1;
     let bits: u32 = 1;
