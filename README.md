@@ -74,6 +74,10 @@
 That logs the following
 
 ```
+Start with user agent: /EARTH:0.0.1/
+config p2p
+config db
+sync w/ peers
 Block {
     block_header: BlockHeader {
         version: 1,

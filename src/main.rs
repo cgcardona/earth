@@ -1,8 +1,10 @@
 use chain::{Block, BlockHeader, Transaction, Vin, Vout};
+use commands::start;
 use std::time::SystemTime;
 use util::calculate_hash;
 
 fn main() {
+    start();
     let version: u32 = 1;
     let bits: u32 = 1;
     let nonce: u32 = 1;
