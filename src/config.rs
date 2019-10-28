@@ -1,6 +1,6 @@
 use clap;
 // use message::Services;
-use network::Network;
+use network::{BitcoinCashConsensusParams, ConsensusFork, ConsensusParams, Network};
 use p2p::InternetProtocol;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
@@ -25,8 +25,6 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 
 #[derive(Debug)]
 pub struct Config {
-    // pub network: Network,
-    // pub consensus: ConsensusParams,
     // pub services: Services,
     // pub connect: Option<net::SocketAddr>,
     // pub seednodes: Vec<String>,
@@ -35,6 +33,7 @@ pub struct Config {
     // pub rpc_config: RpcHttpConfig,
     // pub verification_params: VerificationParameters,
     // pub db: storage::SharedStore,
+    pub consensus: ConsensusParams,
     pub block_notify_command: Option<String>,
     pub host: net::IpAddr,
     pub port: u16,
@@ -42,7 +41,6 @@ pub struct Config {
     pub inbound_connections: u32,
     pub outbound_connections: u32,
     pub db_cache: usize,
-    pub consensus: String,
     pub network: Network,
     pub services: String,
     pub connect: String,
@@ -81,8 +79,9 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         (true, true) => return Err("Only one testnet option can be used".into()),
     };
 
-    // let consensus_fork = parse_consensus_fork(network, &db, &matches)?;
-    // let consensus = ConsensusParams::new(network, consensus_fork);
+    let fork: &str = "bch";
+    let consensus_fork = parse_consensus_fork(network, fork)?;
+    let consensus: ConsensusParams = ConsensusParams::new(network, consensus_fork);
 
     let (in_connections, out_connections): (u32, u32) = match network {
         Network::Testnet | Network::Mainnet | Network::Other(_) => (10, 10),
@@ -143,7 +142,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         Some(s) => s.parse()?,
         None => InternetProtocol::default(),
     };
-    println!("foo; {:?}", only_net);
 
     let host = match matches.value_of("host") {
         Some(s) => s
@@ -215,7 +213,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // };
 
     // Ok(config)
-    let consensus: String = String::from("consensus");
     let services: String = String::from("services");
     let connect: String = String::from("connect");
     let seednodes: String = String::from("seednodes");
@@ -247,41 +244,15 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     })
 }
 
-// fn parse_consensus_fork(
-//     network: Network,
-//     db: &storage::SharedStore,
-//     matches: &clap::ArgMatches,
-// ) -> Result<ConsensusFork, String> {
-//     let old_consensus_fork = db.consensus_fork()?;
-//     let new_consensus_fork = match (matches.is_present("btc"), matches.is_present("bch")) {
-//         (false, false) => match &old_consensus_fork {
-//             &Some(ref old_consensus_fork) => old_consensus_fork,
-//             &None => return Err("You must select fork on first run: --btc, --bch".into()),
-//         },
-//         (true, false) => "btc",
-//         (false, true) => "bch",
-//         _ => return Err("You can only pass single fork argument: --btc, --bch".into()),
-//     };
-
-//     match &old_consensus_fork {
-//         &None => db.set_consensus_fork(new_consensus_fork)?,
-//         &Some(ref old_consensus_fork) if old_consensus_fork == new_consensus_fork => (),
-//         &Some(ref old_consensus_fork) => {
-//             return Err(format!(
-//                 "Cannot select '{}' fork with non-empty database of '{}' fork",
-//                 new_consensus_fork, old_consensus_fork
-//             ))
-//         }
-//     }
-
-//     return match new_consensus_fork {
-//         "btc" => Ok(ConsensusFork::BitcoinCore),
-//         "bch" => Ok(ConsensusFork::BitcoinCash(BitcoinCashConsensusParams::new(
-//             network,
-//         ))),
-//         _ => Err(String::from("Fork mandatory")),
-//     };
-// }
+fn parse_consensus_fork(network: Network, fork: &str) -> Result<ConsensusFork, String> {
+    return match fork {
+        "btc" => Ok(ConsensusFork::BitcoinCore),
+        "bch" => Ok(ConsensusFork::BitcoinCash(BitcoinCashConsensusParams::new(
+            network,
+        ))),
+        _ => Err(String::from("Fork mandatory")),
+    };
+}
 
 // fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcHttpConfig, String> {
 //     let mut config = RpcHttpConfig::with_port(network.rpc_port());
