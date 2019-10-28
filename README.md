@@ -2,7 +2,7 @@
 
 Adventures in crypto
 
-```rs
+```rust
     let version: u32 = 1;
     let bits: u32 = 1;
     let nonce: u32 = 1;
