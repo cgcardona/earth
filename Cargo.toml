@@ -15,3 +15,4 @@ chain = { path = "chain" }
 util = { path = "util" }
 commands = { path = "commands" }
 p2p = { path = "p2p" }
+network = { path = "network" }

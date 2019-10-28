@@ -8,9 +8,6 @@ use util::{calculate_hash, parse};
 
 fn main() {
     let yml = load_yaml!("cli.yml");
-
-    let app = App::from_yaml(yml);
-
     let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
     let cfg = parse(&matches);
 
