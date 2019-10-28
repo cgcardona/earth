@@ -14,7 +14,7 @@ extern crate chain;
 extern crate network;
 extern crate p2p;
 // extern crate primitives;
-// extern crate rpc as ethcore_rpc;
+extern crate rpc as ethcore_rpc;
 // extern crate script;
 extern crate storage;
 // extern crate sync;
@@ -22,8 +22,8 @@ extern crate storage;
 
 // mod commands;
 mod config;
-// mod rpc;
-// mod rpc_apis;
+mod rpc;
+mod rpc_apis;
 mod seednodes;
 mod util;
 

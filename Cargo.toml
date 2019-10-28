@@ -19,4 +19,5 @@ network = { path = "network" }
 app_dirs = { git = "https://github.com/paritytech/app-dirs-rs" }
 storage = { path = "storage" }
 chain = { path = "chain" }
+rpc = { path = "rpc" }
 # db = { path = "db" }

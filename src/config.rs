@@ -5,8 +5,8 @@ use p2p::InternetProtocol;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 // use primitives::hash::H256;
-// use rpc::HttpConfiguration as RpcHttpConfig;
-// use rpc_apis::ApiSet;
+use crate::rpc::HttpConfiguration as RpcHttpConfig;
+use crate::rpc_apis::ApiSet;
 use crate::seednodes::{
     bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes, mainnet_seednodes, testnet_seednodes,
 };
@@ -30,9 +30,9 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 pub struct Config {
     // pub services: Services,
     // pub internet_protocol: InternetProtocol,
-    // pub rpc_config: RpcHttpConfig,
     // pub verification_params: VerificationParameters,
     // pub db: storage::SharedStore,
+    pub rpc_config: RpcHttpConfig,
     pub seednodes: Vec<String>,
     pub connect: Option<net::SocketAddr>,
     pub consensus: ConsensusParams,
@@ -49,7 +49,6 @@ pub struct Config {
     pub data_dir: Option<String>,
     pub user_agent: String,
     pub internet_protocol: String,
-    pub rpc_config: String,
     pub verification_params: String,
     // pub db: String,
 }
@@ -137,6 +136,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
             (Network::Other(_), _) | (Network::Regtest, _) | (Network::Unitest, _) => Vec::new(),
         },
     };
+    println!("SEEDNODES: {:#?}", matches);
 
     let only_net: p2p::InternetProtocol = match matches.value_of("only-net") {
         Some(s) => s.parse()?,
@@ -153,7 +153,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         },
     };
 
-    // let rpc_config = parse_rpc_config(network, matches)?;
+    let rpc_config = parse_rpc_config(network, matches)?;
 
     let block_notify_command: Option<String> = match matches.value_of("blocknotify") {
         Some(s) => Some(
@@ -215,7 +215,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // Ok(config)
     let services: String = String::from("services");
     let internet_protocol: String = String::from("internet_protocol");
-    let rpc_config: String = String::from("rpc_config");
     let verification_params: String = String::from("verification_params");
 
     Ok(Config {
@@ -251,38 +250,38 @@ fn parse_consensus_fork(network: Network, fork: &str) -> Result<ConsensusFork, S
     };
 }
 
-// fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcHttpConfig, String> {
-//     let mut config = RpcHttpConfig::with_port(network.rpc_port());
-//     config.enabled = !matches.is_present("no-jsonrpc");
-//     if !config.enabled {
-//         return Ok(config);
-//     }
+fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcHttpConfig, String> {
+    let mut config = RpcHttpConfig::with_port(network.rpc_port());
+    config.enabled = !matches.is_present("no-jsonrpc");
+    if !config.enabled {
+        return Ok(config);
+    }
 
-//     if let Some(apis) = matches.value_of("jsonrpc-apis") {
-//         config.apis = ApiSet::List(
-//             vec![apis.parse().map_err(|_| "Invalid APIs".to_owned())?]
-//                 .into_iter()
-//                 .collect(),
-//         );
-//     }
-//     if let Some(port) = matches.value_of("jsonrpc-port") {
-//         config.port = port
-//             .parse()
-//             .map_err(|_| "Invalid JSON RPC port".to_owned())?;
-//     }
-//     if let Some(interface) = matches.value_of("jsonrpc-interface") {
-//         config.interface = interface.to_owned();
-//     }
-//     if let Some(cors) = matches.value_of("jsonrpc-cors") {
-//         config.cors = Some(vec![cors
-//             .parse()
-//             .map_err(|_| "Invalid JSON RPC CORS".to_owned())?]);
-//     }
-//     if let Some(hosts) = matches.value_of("jsonrpc-hosts") {
-//         config.hosts = Some(vec![hosts
-//             .parse()
-//             .map_err(|_| "Invalid JSON RPC hosts".to_owned())?]);
-//     }
+    if let Some(apis) = matches.value_of("jsonrpc-apis") {
+        config.apis = ApiSet::List(
+            vec![apis.parse().map_err(|_| "Invalid APIs".to_owned())?]
+                .into_iter()
+                .collect(),
+        );
+    }
+    if let Some(port) = matches.value_of("jsonrpc-port") {
+        config.port = port
+            .parse()
+            .map_err(|_| "Invalid JSON RPC port".to_owned())?;
+    }
+    if let Some(interface) = matches.value_of("jsonrpc-interface") {
+        config.interface = interface.to_owned();
+    }
+    if let Some(cors) = matches.value_of("jsonrpc-cors") {
+        config.cors = Some(vec![cors
+            .parse()
+            .map_err(|_| "Invalid JSON RPC CORS".to_owned())?]);
+    }
+    if let Some(hosts) = matches.value_of("jsonrpc-hosts") {
+        config.hosts = Some(vec![hosts
+            .parse()
+            .map_err(|_| "Invalid JSON RPC hosts".to_owned())?]);
+    }
 
-//     Ok(config)
-// }
+    Ok(config)
+}
