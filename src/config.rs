@@ -13,7 +13,7 @@ use std::hash::{Hash, Hasher};
 use std::net;
 // use storage;
 // use sync::VerificationParameters;
-// use util::open_db;
+use super::util::open_db;
 // use verification::VerificationLevel;
 // use {REGTEST_USER_AGENT, USER_AGENT};
 
@@ -65,21 +65,21 @@ pub struct Config {
 pub const DEFAULT_DB_CACHE: usize = 512;
 
 pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
-    // let db_cache = match matches.value_of("db-cache") {
-    //     Some(s) => s
-    //         .parse()
-    //         .map_err(|_| "Invalid cache size - should be number in MB".to_owned())?,
-    //     None => DEFAULT_DB_CACHE,
-    // };
+    let db_cache = match matches.value_of("db-cache") {
+        Some(s) => s
+            .parse()
+            .map_err(|_| "Invalid cache size - should be number in MB".to_owned())?,
+        None => DEFAULT_DB_CACHE,
+    };
 
-    // let data_dir = match matches.value_of("data-dir") {
-    //     Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
-    //     None => None,
-    // };
+    let data_dir = match matches.value_of("data-dir") {
+        Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
+        None => None,
+    };
 
-    // let db = open_db(&data_dir, db_cache);
+    let db = open_db(&data_dir, db_cache);
 
-    // let quiet = matches.is_present("quiet");
+    let quiet = matches.is_present("quiet");
     // let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
     //     (true, false) => Network::Testnet,
     //     (false, true) => Network::Regtest,
@@ -238,21 +238,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     let rpc_config: String = String::from("rpc_config");
     let block_notify_command: String = String::from("block_notify_command");
     let verification_params: String = String::from("verification_params");
-    let db: String = String::from("db");
-
-    let db_cache = match matches.value_of("db-cache") {
-        Some(s) => s
-            .parse()
-            .map_err(|_| "Invalid cache size - should be number in MB".to_owned())?,
-        None => DEFAULT_DB_CACHE,
-    };
-
-    let data_dir = match matches.value_of("data-dir") {
-        Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
-        None => None,
-    };
-
-    let quiet = matches.is_present("quiet");
 
     Ok(Config {
         port: port,

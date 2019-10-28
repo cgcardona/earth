@@ -6,7 +6,13 @@ use commands::start;
 use config::{calculate_hash, parse};
 use std::time::SystemTime;
 
+// mod commands;
 mod config;
+// mod rpc;
+// mod rpc_apis;
+// mod seednodes;
+mod util;
+
 pub const USER_AGENT: &'static str = "earth";
 pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
 
