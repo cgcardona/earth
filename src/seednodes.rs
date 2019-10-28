@@ -34,6 +34,7 @@ pub fn bitcoin_cash_seednodes() -> Vec<&'static str> {
         "seed.bitprim.org:8333",
         "seed.deadalnix.me:8333",
         "seeder.criptolayer.net:8333",
+        "seed.bchd.cash:8333",
     ]
 }
 
