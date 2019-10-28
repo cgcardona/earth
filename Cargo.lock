@@ -109,6 +109,7 @@ dependencies = [
  "chain 0.1.0",
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "commands 0.1.0",
+ "network 0.1.0",
  "p2p 0.1.0",
  "serde 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.102 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -145,6 +146,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "network"
+version = "0.1.0"
 
 [[package]]
 name = "nodrop"

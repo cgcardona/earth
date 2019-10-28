@@ -1,6 +1,6 @@
 use clap;
 // use message::Services;
-// use network::{BitcoinCashConsensusParams, ConsensusFork, ConsensusParams, Network};
+use network::Network;
 use p2p::InternetProtocol;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
@@ -43,7 +43,7 @@ pub struct Config {
     // pub db: storage::SharedStore,
     pub db_cache: usize,
     pub consensus: String,
-    pub network: String,
+    pub network: Network,
     pub services: String,
     pub port: String,
     pub connect: String,
@@ -80,12 +80,12 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     let db = open_db(&data_dir, db_cache);
 
     let quiet = matches.is_present("quiet");
-    // let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
-    //     (true, false) => Network::Testnet,
-    //     (false, true) => Network::Regtest,
-    //     (false, false) => Network::Mainnet,
-    //     (true, true) => return Err("Only one testnet option can be used".into()),
-    // };
+    let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
+        (true, false) => Network::Testnet,
+        (false, true) => Network::Regtest,
+        (false, false) => Network::Mainnet,
+        (true, true) => return Err("Only one testnet option can be used".into()),
+    };
 
     // let consensus_fork = parse_consensus_fork(network, &db, &matches)?;
     // let consensus = ConsensusParams::new(network, consensus_fork);
@@ -220,10 +220,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // };
 
     // Ok(config)
-    let network = match matches.value_of("network") {
-        Some(s) => String::from("network"),
-        None => String::from("network"),
-    };
     let consensus: String = String::from("consensus");
     let services: String = String::from("services");
     let port: String = String::from("port");
