@@ -13,7 +13,7 @@ use std::hash::{Hash, Hasher};
 use std::net;
 // use storage;
 // use sync::VerificationParameters;
-use super::util::open_db;
+// use super::util::open_db;
 // use verification::VerificationLevel;
 // use {REGTEST_USER_AGENT, USER_AGENT};
 
@@ -59,7 +59,7 @@ pub struct Config {
     pub rpc_config: String,
     pub block_notify_command: String,
     pub verification_params: String,
-    pub db: String,
+    // pub db: String,
 }
 
 pub const DEFAULT_DB_CACHE: usize = 512;
@@ -77,7 +77,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         None => None,
     };
 
-    let db = open_db(&data_dir, db_cache);
+    // let db = open_db(&data_dir, db_cache);
 
     let quiet = matches.is_present("quiet");
     let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
@@ -254,7 +254,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         rpc_config: rpc_config,
         block_notify_command: block_notify_command,
         verification_params: verification_params,
-        db: db,
+        // db: db,
     })
 }
 
