@@ -1,9 +1,25 @@
+#[macro_use]
+extern crate clap;
 use chain::{Block, BlockHeader, Transaction, Vin, Vout};
+pub use clap::App;
 use commands::start;
 use std::time::SystemTime;
-use util::calculate_hash;
+use util::{calculate_hash, parse};
 
 fn main() {
+    let yml = load_yaml!("cli.yml");
+
+    let app = App::from_yaml(yml);
+
+    let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
+    let cfg = parse(&matches);
+
+    // let contents = fs::read_to_string("cli.toml").expect("Something went wrong reading the file");
+    // let s: String = contents.to_owned();
+    // let s_slice: &str = &s[..]; // take a full slice of the string
+    // let config: Config = toml::from_str(s_slice).unwrap();
+
+    println!("MATCHES: {:#?}", cfg);
     start();
     let version: u32 = 1;
     let bits: u32 = 1;
@@ -64,9 +80,9 @@ fn main() {
         size,
     );
     let block: Block = Block::new(block_header, vec![transcation]);
-    println!("{:#?}!", block);
-    println!("----------");
-    println!("{:#?}!", block.block_header());
-    println!("----------");
-    println!("{:#?}!", block.transactions());
+    // println!("{:#?}!", block);
+    // println!("----------");
+    // println!("{:#?}!", block.block_header());
+    // println!("----------");
+    // println!("{:#?}!", block.transactions());
 }
