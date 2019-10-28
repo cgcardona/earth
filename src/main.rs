@@ -45,10 +45,16 @@ pub const PROTOCOL_MINIMUM: u32 = 70_001;
 pub const LOG_INFO: &'static str = "sync=info";
 
 fn main() {
+    ::std::env::set_var("RUST_BACKTRACE", "1");
+    run();
+    // if let Err(err) = run() {
+    //     println!("{}", err);
+    // }
+}
+
+fn run() {
     let yml = load_yaml!("cli.yml");
     let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
     let cfg = parse(&matches);
     println!("MATCHES: {:#?}", cfg);
-
-    start();
 }
