@@ -29,7 +29,6 @@ fn main() {
         prev_header_hash,
         time,
     );
-    println!("{}", calculate_hash(&block_header));
 
     let txid: String =
         String::from("fe28050b93faea61fa88c4c630f0e1f0a1c24d0082dd0e10d369e13212128f33");
