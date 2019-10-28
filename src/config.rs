@@ -28,36 +28,30 @@ pub struct Config {
     // pub network: Network,
     // pub consensus: ConsensusParams,
     // pub services: Services,
-    // pub port: u16,
     // pub connect: Option<net::SocketAddr>,
-    // pub host: net::IpAddr,
     // pub seednodes: Vec<String>,
-    // pub inbound_connections: u32,
-    // pub outbound_connections: u32,
-    // pub p2p_threads: usize,
     // pub user_agent: String,
     // pub internet_protocol: InternetProtocol,
     // pub rpc_config: RpcHttpConfig,
-    // pub block_notify_command: Option<String>,
     // pub verification_params: VerificationParameters,
     // pub db: storage::SharedStore,
+    pub block_notify_command: Option<String>,
+    pub host: net::IpAddr,
+    pub port: u16,
+    pub p2p_threads: usize,
+    pub inbound_connections: u32,
+    pub outbound_connections: u32,
     pub db_cache: usize,
     pub consensus: String,
     pub network: Network,
     pub services: String,
-    pub port: String,
     pub connect: String,
-    pub host: String,
     pub seednodes: String,
     pub quiet: bool,
-    pub inbound_connections: String,
-    pub outbound_connections: String,
-    pub p2p_threads: String,
     pub data_dir: Option<String>,
     pub user_agent: String,
     pub internet_protocol: String,
     pub rpc_config: String,
-    pub block_notify_command: String,
     pub verification_params: String,
     // pub db: String,
 }
@@ -65,22 +59,22 @@ pub struct Config {
 pub const DEFAULT_DB_CACHE: usize = 512;
 
 pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
-    let db_cache = match matches.value_of("db-cache") {
+    let db_cache: usize = match matches.value_of("db-cache") {
         Some(s) => s
             .parse()
             .map_err(|_| "Invalid cache size - should be number in MB".to_owned())?,
         None => DEFAULT_DB_CACHE,
     };
 
-    let data_dir = match matches.value_of("data-dir") {
+    let data_dir: Option<String> = match matches.value_of("data-dir") {
         Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
         None => None,
     };
 
     // let db = open_db(&data_dir, db_cache);
 
-    let quiet = matches.is_present("quiet");
-    let network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
+    let quiet: bool = matches.is_present("quiet");
+    let network: Network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
         (true, false) => Network::Testnet,
         (false, true) => Network::Regtest,
         (false, false) => Network::Mainnet,
@@ -90,15 +84,15 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // let consensus_fork = parse_consensus_fork(network, &db, &matches)?;
     // let consensus = ConsensusParams::new(network, consensus_fork);
 
-    // let (in_connections, out_connections) = match network {
-    //     Network::Testnet | Network::Mainnet | Network::Other(_) => (10, 10),
-    //     Network::Regtest | Network::Unitest => (1, 0),
-    // };
+    let (in_connections, out_connections): (u32, u32) = match network {
+        Network::Testnet | Network::Mainnet | Network::Other(_) => (10, 10),
+        Network::Regtest | Network::Unitest => (1, 0),
+    };
 
-    // let p2p_threads = match network {
-    //     Network::Testnet | Network::Mainnet | Network::Other(_) => 4,
-    //     Network::Regtest | Network::Unitest => 1,
-    // };
+    let p2p_threads: usize = match network {
+        Network::Testnet | Network::Mainnet | Network::Other(_) => 4,
+        Network::Regtest | Network::Unitest => 1,
+    };
 
     // // to skip idiotic 30 seconds delay in test-scripts
     // let user_agent_suffix = match consensus.fork {
@@ -112,10 +106,10 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     //     Network::Regtest => REGTEST_USER_AGENT.into(),
     // };
 
-    // let port = match matches.value_of("port") {
-    //     Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,
-    //     None => network.port(),
-    // };
+    let port: u16 = match matches.value_of("port") {
+        Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,
+        None => network.port(),
+    };
 
     // let connect = match matches.value_of("connect") {
     //     Some(s) => Some(match s.parse::<net::SocketAddr>() {
@@ -145,30 +139,31 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     //     },
     // };
 
-    // let only_net = match matches.value_of("only-net") {
-    //     Some(s) => s.parse()?,
-    //     None => InternetProtocol::default(),
-    // };
+    let only_net = match matches.value_of("only-net") {
+        Some(s) => s.parse()?,
+        None => InternetProtocol::default(),
+    };
+    println!("foo; {:?}", only_net);
 
-    // let host = match matches.value_of("host") {
-    //     Some(s) => s
-    //         .parse::<net::IpAddr>()
-    //         .map_err(|_| "Invalid host".to_owned())?,
-    //     None => match only_net {
-    //         InternetProtocol::IpV6 => "::".parse().unwrap(),
-    //         _ => "0.0.0.0".parse().unwrap(),
-    //     },
-    // };
+    let host = match matches.value_of("host") {
+        Some(s) => s
+            .parse::<net::IpAddr>()
+            .map_err(|_| "Invalid host".to_owned())?,
+        None => match only_net {
+            InternetProtocol::IpV6 => "::".parse().unwrap(),
+            _ => "0.0.0.0".parse().unwrap(),
+        },
+    };
 
     // let rpc_config = parse_rpc_config(network, matches)?;
 
-    // let block_notify_command = match matches.value_of("blocknotify") {
-    //     Some(s) => Some(
-    //         s.parse()
-    //             .map_err(|_| "Invalid blocknotify commmand".to_owned())?,
-    //     ),
-    //     None => None,
-    // };
+    let block_notify_command: Option<String> = match matches.value_of("blocknotify") {
+        Some(s) => Some(
+            s.parse()
+                .map_err(|_| "Invalid blocknotify commmand".to_owned())?,
+        ),
+        None => None,
+    };
 
     // let services = Services::default().with_network(true);
     // let services = match &consensus.fork {
@@ -222,17 +217,11 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // Ok(config)
     let consensus: String = String::from("consensus");
     let services: String = String::from("services");
-    let port: String = String::from("port");
     let connect: String = String::from("connect");
-    let host: String = String::from("host");
     let seednodes: String = String::from("seednodes");
-    let inbound_connections: String = String::from("inbound_connections");
-    let outbound_connections: String = String::from("outbound_connections");
-    let p2p_threads: String = String::from("p2p_threads");
     let user_agent: String = String::from("user_agent");
     let internet_protocol: String = String::from("internet_protocol");
     let rpc_config: String = String::from("rpc_config");
-    let block_notify_command: String = String::from("block_notify_command");
     let verification_params: String = String::from("verification_params");
 
     Ok(Config {
@@ -246,8 +235,8 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         connect: connect,
         host: host,
         seednodes: seednodes,
-        inbound_connections: inbound_connections,
-        outbound_connections: outbound_connections,
+        inbound_connections: in_connections,
+        outbound_connections: out_connections,
         p2p_threads: p2p_threads,
         user_agent: user_agent,
         internet_protocol: internet_protocol,
