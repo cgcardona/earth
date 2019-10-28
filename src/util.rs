@@ -1,20 +1,20 @@
-// use app_dirs::{app_dir, AppDataType};
+use app_dirs::{app_dir, AppDataType};
 // use config::Config;
-// use db;
+use crate::APP_INFO;
+use db;
 use std::fs::create_dir_all;
 use std::path::PathBuf;
 use std::sync::Arc;
-// use {storage, APP_INFO};
+use storage;
 
-pub fn open_db(data_dir: &Option<String>, db_cache: usize) -> String {
-    // let db_path = match *data_dir {
-    //     Some(ref data_dir) => custom_path(&data_dir, "db"),
-    //     None => app_dir(AppDataType::UserData, &APP_INFO, "db").expect("Failed to get app dir"),
-    // };
-    // Arc::new(
-    //     db::BlockChainDatabase::open_at_path(db_path, db_cache).expect("Failed to open database"),
-    // )
-    String::from("success")
+pub fn open_db(data_dir: &Option<String>, db_cache: usize) -> storage::SharedStore {
+    let db_path: PathBuf = match *data_dir {
+        Some(ref data_dir) => custom_path(&data_dir, "db"),
+        None => app_dir(AppDataType::UserData, &APP_INFO, "db").expect("Failed to get app dir"),
+    };
+    Arc::new(
+        db::BlockChainDatabase::open_at_path(db_path, db_cache).expect("Failed to open database"),
+    )
 }
 
 // pub fn node_table_path(cfg: &Config) -> PathBuf {

@@ -1,0 +1,21 @@
+[package]
+name = "db"
+version = "0.1.0"
+authors = ["Gabriel Cardona <cgcardona@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rocksdb = "0.12.4"
+elastic-array = "0.6"
+parking_lot = "0.4"
+log = "0.4"
+bit-vec = "0.4"
+lru-cache = "0.1"
+primitives = { path = "../primitives" }
+serialization = { path = "../serialization" }
+chain = { path = "../chain" }
+storage = { path = "../storage" }
+
+[dev-dependencies]
+tempdir = "0.3"
+test-data = { path = "../test-data" }
