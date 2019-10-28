@@ -186,33 +186,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     //     }
     //     _ => network.default_verification_edge(),
     // };
-
-    // let config = Config {
-    //     quiet: quiet,
-    //     network: network,
-    //     consensus: consensus,
-    //     services: services,
-    //     port: port,
-    //     connect: connect,
-    //     host: host,
-    //     seednodes: seednodes,
-    //     inbound_connections: in_connections,
-    //     outbound_connections: out_connections,
-    //     p2p_threads: p2p_threads,
-    //     db_cache: db_cache,
-    //     data_dir: data_dir,
-    //     user_agent: user_agent,
-    //     internet_protocol: only_net,
-    //     rpc_config: rpc_config,
-    //     block_notify_command: block_notify_command,
-    //     verification_params: VerificationParameters {
-    //         verification_level: verification_level,
-    //         verification_edge: verification_edge,
-    //     },
-    //     db: db,
-    // };
-
-    // Ok(config)
     let services: String = String::from("services");
     let internet_protocol: String = String::from("internet_protocol");
     let verification_params: String = String::from("verification_params");
