@@ -47,9 +47,9 @@ fn main() {
         size,
     );
     let block: Block = Block::new(block_header, vec![transcation]);
-    println!("Hello, {:#?}!", block.block_header().time());
-    // println!("----------");
-    // println!("Header: {:#?}!", b.block_header());
-    // println!("----------");
-    // println!("Transactions: {:#?}!", b.transactions());
+    println!("{:#?}!", block);
+    println!("----------");
+    println!("{:#?}!", block.block_header());
+    println!("----------");
+    println!("{:#?}!", block.transactions());
 }
