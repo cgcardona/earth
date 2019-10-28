@@ -3,20 +3,20 @@ use std::time::SystemTime;
 #[derive(Debug)]
 pub struct BlockHeader {
     version: u32,
-    bits: u8,
+    bits: u32,
     nonce: u32,
-    merkle_root_hash: u8,
-    prev_header_hash: u8,
+    merkle_root_hash: u32,
+    prev_header_hash: u32,
     time: SystemTime,
 }
 
 impl BlockHeader {
     pub fn new(
         version: u32,
-        bits: u8,
+        bits: u32,
         nonce: u32,
-        merkle_root_hash: u8,
-        prev_header_hash: u8,
+        merkle_root_hash: u32,
+        prev_header_hash: u32,
         time: SystemTime,
     ) -> BlockHeader {
         BlockHeader {
@@ -33,7 +33,7 @@ impl BlockHeader {
         &self.version
     }
 
-    pub fn bits(&self) -> &u8 {
+    pub fn bits(&self) -> &u32 {
         &self.bits
     }
 
@@ -41,11 +41,11 @@ impl BlockHeader {
         &self.nonce
     }
 
-    pub fn merkle_root_hash(&self) -> &u8 {
+    pub fn merkle_root_hash(&self) -> &u32 {
         &self.merkle_root_hash
     }
 
-    pub fn prev_header_hash(&self) -> &u8 {
+    pub fn prev_header_hash(&self) -> &u32 {
         &self.prev_header_hash
     }
 
