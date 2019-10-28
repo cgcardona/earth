@@ -3,9 +3,10 @@ extern crate clap;
 use chain::{Block, BlockHeader, Transaction, Vin, Vout};
 pub use clap::App;
 use commands::start;
+use config::{calculate_hash, parse};
 use std::time::SystemTime;
-use util::{calculate_hash, parse};
 
+mod config;
 pub const USER_AGENT: &'static str = "earth";
 pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
 
@@ -75,9 +76,9 @@ fn main() {
         size,
     );
     let block: Block = Block::new(block_header, vec![transcation]);
-    println!("{:#?}!", block);
-    println!("----------");
-    println!("{:#?}!", block.block_header());
-    println!("----------");
-    println!("{:#?}!", block.transactions());
+    // println!("{:#?}!", block);
+    // println!("----------");
+    // println!("{:#?}!", block.block_header());
+    // println!("----------");
+    // println!("{:#?}!", block.transactions());
 }
