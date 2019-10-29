@@ -138,7 +138,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         },
     };
 
-    let rpc_config = parse_rpc_config(network, matches)?;
+    let rpc_config: RpcHttpConfig = parse_rpc_config(network, matches)?;
 
     let block_notify_command: Option<String> = match matches.value_of("blocknotify") {
         Some(s) => Some(
