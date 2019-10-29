@@ -56,5 +56,5 @@ fn run() {
     let yml = load_yaml!("cli.yml");
     let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
     let cfg = parse(&matches);
-    // println!("{:#?}", cfg);
+    println!("{:#?}", cfg);
 }

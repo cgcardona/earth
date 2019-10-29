@@ -7,9 +7,7 @@ use std::hash::{Hash, Hasher};
 // use primitives::hash::H256;
 use crate::rpc::HttpConfiguration as RpcHttpConfig;
 use crate::rpc_apis::ApiSet;
-use crate::seednodes::{
-    bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes, mainnet_seednodes, testnet_seednodes,
-};
+use crate::seednodes::{bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes};
 use std::net;
 // use storage;
 // use sync::VerificationParameters;
@@ -117,10 +115,10 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
                 .into_iter()
                 .map(Into::into)
                 .collect(),
-            Network::Other(_) | (Network::Regtest) | (Network::Unitest) => Vec::new(),
+            Network::Other(_) | Network::Regtest | Network::Unitest => Vec::new(),
         },
     };
-    println!("{:#?}", seednodes);
+    // println!("{:#?}", seednodes);
 
     let only_net: p2p::InternetProtocol = match matches.value_of("only-net") {
         Some(s) => s.parse()?,
