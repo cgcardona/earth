@@ -75,7 +75,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         (true, true) => return Err("Only one testnet option can be used".into()),
     };
 
-    let consensus_fork = parse_consensus_fork(network)?;
+    let consensus_fork: ConsensusFork = parse_consensus_fork(network)?;
     let consensus: ConsensusParams = ConsensusParams::new(network, consensus_fork);
 
     let (in_connections, out_connections): (u32, u32) = match network {
@@ -105,6 +105,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         }?),
         None => None,
     };
+    // println!("{:#?}", connect);
 
     let seednodes: Vec<String> = match matches.value_of("seednode") {
         Some(s) => vec![s.parse().map_err(|_| "Invalid seednode".to_owned())?],
@@ -122,6 +123,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
             (Network::Other(_), _) | (Network::Regtest, _) | (Network::Unitest, _) => Vec::new(),
         },
     };
+    // println!("{:#?}", seednodes);
 
     let only_net: p2p::InternetProtocol = match matches.value_of("only-net") {
         Some(s) => s.parse()?,
