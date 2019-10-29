@@ -186,15 +186,11 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     })
 }
 
-fn parse_consensus_fork(network: Network) -> Result<ConsensusFork, String> {
-    return Ok(ConsensusFork::BitcoinCash(BitcoinCashConsensusParams::new(
-        network,
-    )));
-}
-
 fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcHttpConfig, String> {
-    let mut config = RpcHttpConfig::with_port(network.rpc_port());
+    let mut config: RpcHttpConfig = RpcHttpConfig::with_port(network.rpc_port());
+
     config.enabled = !matches.is_present("no-jsonrpc");
+
     if !config.enabled {
         return Ok(config);
     }
@@ -206,19 +202,23 @@ fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcH
                 .collect(),
         );
     }
+
     if let Some(port) = matches.value_of("jsonrpc-port") {
         config.port = port
             .parse()
             .map_err(|_| "Invalid JSON RPC port".to_owned())?;
     }
+
     if let Some(interface) = matches.value_of("jsonrpc-interface") {
         config.interface = interface.to_owned();
     }
+
     if let Some(cors) = matches.value_of("jsonrpc-cors") {
         config.cors = Some(vec![cors
             .parse()
             .map_err(|_| "Invalid JSON RPC CORS".to_owned())?]);
     }
+
     if let Some(hosts) = matches.value_of("jsonrpc-hosts") {
         config.hosts = Some(vec![hosts
             .parse()
