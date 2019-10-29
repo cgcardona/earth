@@ -1,5 +1,5 @@
 use clap;
-// use message::Services;
+use message::Services;
 use network::{BitcoinCashConsensusParams, ConsensusFork, ConsensusParams, Network};
 use p2p::InternetProtocol;
 use std::collections::hash_map::DefaultHasher;
@@ -137,7 +137,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         None => None,
     };
 
-    // let services = Services::default().with_network(true);
+    let services = Services::default().with_network(true);
     // let services = match &consensus.fork {
     //     &ConsensusFork::BitcoinCash(_) => services.with_bitcoin_cash(true),
     //     &ConsensusFork::BitcoinCore => services.with_witness(true),

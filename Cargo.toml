@@ -13,6 +13,7 @@ serde = "1.0.102"
 clap = { features = ["yaml"] }
 commands = { path = "commands" }
 primitives = { path = "primitives" }
+message = { path = "message" }  
 serialization = { path = "serialization" }
 p2p = { path = "p2p" }
 network = { path = "network" }
