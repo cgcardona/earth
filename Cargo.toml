@@ -22,3 +22,7 @@ storage = { path = "storage" }
 chain = { path = "chain" }
 rpc = { path = "rpc" }
 # db = { path = "db" }
+
+[[bin]]
+path = "earth/main.rs"
+name = "earth"
