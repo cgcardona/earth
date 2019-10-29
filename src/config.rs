@@ -16,10 +16,6 @@ use std::net;
 // use super::util::open_db;
 // use verification::VerificationLevel;
 
-// TODO -  Why don't these consts work across libs/mods?
-pub const USER_AGENT: &'static str = "earth";
-pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
-
 pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
     let mut s = DefaultHasher::new();
     t.hash(&mut s);
@@ -71,6 +67,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     // let db = open_db(&data_dir, db_cache);
 
     let quiet: bool = matches.is_present("quiet");
+
     let network: Network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
         (true, false) => Network::Testnet,
         (false, true) => Network::Regtest,
@@ -92,17 +89,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         Network::Regtest | Network::Unitest => 1,
     };
 
-    // to skip idiotic 30 seconds delay in test-scripts
-    let user_agent_suffix: &str = match consensus.fork {
-        ConsensusFork::BitcoinCore => "",
-        ConsensusFork::BitcoinCash(_) => "/UAHF",
-    };
-    let user_agent: String = match network {
-        Network::Testnet | Network::Mainnet | Network::Unitest | Network::Other(_) => {
-            format!("{}{}", USER_AGENT, user_agent_suffix)
-        }
-        Network::Regtest => REGTEST_USER_AGENT.into(),
-    };
+    let user_agent: String = String::from("/EARTH:0.0.1/");
 
     let port: u16 = match matches.value_of("port") {
         Some(port) => port.parse().map_err(|_| "Invalid port".to_owned())?,

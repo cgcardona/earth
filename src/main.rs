@@ -32,7 +32,7 @@ pub use clap::App;
 use commands::start;
 use config::parse;
 
-pub const USER_AGENT: &'static str = "earth";
+pub const USER_AGENT: &'static str = "/EARTH:0.0.1/";
 pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
 
 pub const APP_INFO: AppInfo = AppInfo {
