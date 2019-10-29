@@ -75,8 +75,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         (true, true) => return Err("Only one testnet option can be used".into()),
     };
 
-    let fork: &str = "bch";
-    let consensus_fork = parse_consensus_fork(network, fork)?;
+    let consensus_fork = parse_consensus_fork(network)?;
     let consensus: ConsensusParams = ConsensusParams::new(network, consensus_fork);
 
     let (in_connections, out_connections): (u32, u32) = match network {
@@ -123,7 +122,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
             (Network::Other(_), _) | (Network::Regtest, _) | (Network::Unitest, _) => Vec::new(),
         },
     };
-    println!("SEEDNODES: {:#?}", matches);
 
     let only_net: p2p::InternetProtocol = match matches.value_of("only-net") {
         Some(s) => s.parse()?,
@@ -200,14 +198,10 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     })
 }
 
-fn parse_consensus_fork(network: Network, fork: &str) -> Result<ConsensusFork, String> {
-    return match fork {
-        "btc" => Ok(ConsensusFork::BitcoinCore),
-        "bch" => Ok(ConsensusFork::BitcoinCash(BitcoinCashConsensusParams::new(
-            network,
-        ))),
-        _ => Err(String::from("Fork mandatory")),
-    };
+fn parse_consensus_fork(network: Network) -> Result<ConsensusFork, String> {
+    return Ok(ConsensusFork::BitcoinCash(BitcoinCashConsensusParams::new(
+        network,
+    )));
 }
 
 fn parse_rpc_config(network: Network, matches: &clap::ArgMatches) -> Result<RpcHttpConfig, String> {
