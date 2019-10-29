@@ -7,7 +7,7 @@ use std::hash::{Hash, Hasher};
 // use primitives::hash::H256;
 use crate::rpc::HttpConfiguration as RpcHttpConfig;
 use crate::rpc_apis::ApiSet;
-use crate::seednodes::{bitcoin_cash_seednodes, bitcoin_cash_testnet_seednodes};
+use crate::seednodes::{mainnet_seednodes, testnet_seednodes};
 use std::net;
 // use storage;
 // use sync::VerificationParameters;
@@ -23,9 +23,9 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 #[derive(Debug)]
 pub struct Config {
     // pub services: Services,
-    // pub internet_protocol: InternetProtocol,
     // pub verification_params: VerificationParameters,
     // pub db: storage::SharedStore,
+    pub internet_protocol: InternetProtocol,
     pub rpc_config: RpcHttpConfig,
     pub seednodes: Vec<String>,
     pub connect: Option<net::SocketAddr>,
@@ -42,7 +42,6 @@ pub struct Config {
     pub quiet: bool,
     pub data_dir: Option<String>,
     pub user_agent: String,
-    pub internet_protocol: String,
     pub verification_params: String,
     // pub db: String,
 }
@@ -74,7 +73,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     };
 
     let consensus: ConsensusParams = ConsensusParams::new(network);
-    println!("{:#?}", consensus);
 
     let (in_connections, out_connections): (u32, u32) = match network {
         Network::Testnet | Network::Mainnet | Network::Other(_) => (10, 10),
@@ -107,14 +105,8 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     let seednodes: Vec<String> = match matches.value_of("seednode") {
         Some(s) => vec![s.parse().map_err(|_| "Invalid seednode".to_owned())?],
         None => match network {
-            Network::Mainnet => bitcoin_cash_seednodes()
-                .into_iter()
-                .map(Into::into)
-                .collect(),
-            Network::Testnet => bitcoin_cash_testnet_seednodes()
-                .into_iter()
-                .map(Into::into)
-                .collect(),
+            Network::Mainnet => mainnet_seednodes().into_iter().map(Into::into).collect(),
+            Network::Testnet => testnet_seednodes().into_iter().map(Into::into).collect(),
             Network::Other(_) | Network::Regtest | Network::Unitest => Vec::new(),
         },
     };
@@ -169,7 +161,6 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
     //     _ => network.default_verification_edge(),
     // };
     let services: String = String::from("services");
-    let internet_protocol: String = String::from("internet_protocol");
     let verification_params: String = String::from("verification_params");
 
     Ok(Config {
@@ -187,7 +178,7 @@ pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
         outbound_connections: out_connections,
         p2p_threads: p2p_threads,
         user_agent: user_agent,
-        internet_protocol: internet_protocol,
+        internet_protocol: only_net,
         rpc_config: rpc_config,
         block_notify_command: block_notify_command,
         verification_params: verification_params,
