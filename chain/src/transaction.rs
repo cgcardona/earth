@@ -7,8 +7,9 @@ use crate::hash::H256;
 use crypto::dhash256;
 use heapsize::HeapSizeOf;
 use hex::FromHex;
-use ser::{deserialize, serialize, serialize_with_flags, SERIALIZE_TRANSACTION_WITNESS};
-use ser::{Deserializable, Error, Reader, Serializable, Stream};
+use ser::Error as ReaderError;
+use ser::{Deserializable, Reader, Serializable, Stream};
+use serde::{Deserialize, Serialize};
 use std::io;
 
 /// Must be zero.
@@ -16,7 +17,7 @@ const WITNESS_MARKER: u8 = 0;
 /// Must be nonzero.
 const WITNESS_FLAG: u8 = 1;
 
-#[derive(Debug, PartialEq, Eq, Clone, Default, Hash)]
+#[derive(Eq, Hash, Debug, PartialEq, Default, Clone)]
 pub struct OutPoint {
     pub hash: H256,
     pub index: u32,
@@ -95,6 +96,23 @@ pub struct Transaction {
     pub inputs: Vec<TransactionInput>,
     pub outputs: Vec<TransactionOutput>,
     pub lock_time: u32,
+}
+
+// TODO this is a placeholder Serializable impl
+impl Serializable for Transaction {
+    fn serialize(&self, stream: &mut Stream) {}
+}
+
+// // TODO this is a placeholder Deserializable impl
+impl Deserializable for Transaction {
+    fn deserialize<T>(reader: &mut Reader<T>) -> Result<Self, ReaderError>
+    where
+        T: io::Read,
+    {
+        let data = r#try!(reader.read::<Transaction>());
+
+        Ok(data)
+    }
 }
 
 // impl From<&'static str> for Transaction {

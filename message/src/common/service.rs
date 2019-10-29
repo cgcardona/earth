@@ -2,6 +2,7 @@ use ser::{Deserializable, Error as ReaderError, Reader, Serializable, Stream};
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Default, PartialEq, Eq, Clone, Copy, Deserialize, Serialize)]
 pub struct Services(u64);
+use std::io;
 
 impl From<Services> for u64 {
 	fn from(s: Services) -> Self {
@@ -18,6 +19,18 @@ impl From<u64> for Services {
 // TODO this is a placeholder Serializable impl
 impl Serializable for Services {
 	fn serialize(&self, stream: &mut Stream) {}
+}
+
+// // TODO this is a placeholder Deserializable impl
+impl Deserializable for Services {
+	fn deserialize<T>(reader: &mut Reader<T>) -> Result<Self, ReaderError>
+	where
+		T: io::Read,
+	{
+		let data = r#try!(reader.read::<Services>());
+
+		Ok(data)
+	}
 }
 
 impl Services {

@@ -1,7 +1,9 @@
 use crate::{BlockHeader, Transaction};
 use hex::FromHex;
 use ser::deserialize;
-use serde_derive::{Deserialize, Serialize};
+use ser::{Deserializable, Error as ReaderError, Reader, Serializable, Stream};
+use serde::{Deserialize, Serialize};
+use std::io;
 
 #[cfg(any(test, feature = "test-helpers"))]
 use hash::H256;
@@ -12,6 +14,23 @@ use merkle_root::merkle_root;
 pub struct Block {
     pub block_header: BlockHeader,
     pub transactions: Vec<Transaction>,
+}
+
+// TODO this is a placeholder Serializable impl
+impl Serializable for Block {
+    fn serialize(&self, stream: &mut Stream) {}
+}
+
+// // TODO this is a placeholder Deserializable impl
+impl Deserializable for Block {
+    fn deserialize<T>(reader: &mut Reader<T>) -> Result<Self, ReaderError>
+    where
+        T: io::Read,
+    {
+        let data = r#try!(reader.read::<Block>());
+
+        Ok(data)
+    }
 }
 
 // impl From<&'static str> for Block {

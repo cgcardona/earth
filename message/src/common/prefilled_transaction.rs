@@ -1,9 +1,8 @@
 use chain::Transaction;
 use ser::{CompactInteger, Deserializable, Error as ReaderError, Reader, Serializable, Stream};
-use serde_derive::{Deserialize, Serialize};
 use std::io;
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq)]
 pub struct PrefilledTransaction {
 	pub index: usize,
 	pub transaction: Transaction,

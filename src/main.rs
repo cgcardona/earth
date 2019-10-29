@@ -10,7 +10,7 @@ extern crate chain;
 // extern crate import;
 // extern crate keys;
 // extern crate logs;
-extern crate message;
+// extern crate message;
 extern crate network;
 extern crate p2p;
 // extern crate primitives;

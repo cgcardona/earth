@@ -1,6 +1,6 @@
 use crate::bytes::Bytes;
 use crate::common::{IpAddress, Port, Services};
-use crate::read_and_hash::ReadAndHash;
+use chain::{BlockHeader, ReadAndHash, ShortTransactionID};
 use ser::deserialize;
 use ser::{Deserializable, Error as ReaderError, Reader, Serializable, Stream};
 use serde::{Deserialize, Serialize};
@@ -31,7 +31,7 @@ impl Deserializable for NetAddress {
 	where
 		T: io::Read,
 	{
-		let data = r#try!(reader.read_and_hash::<NetAddress>());
+		let data = r#try!(reader.read::<NetAddress>());
 		let header = NetAddress {
 			services: data.services,
 			address: data.address,

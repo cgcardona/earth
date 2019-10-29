@@ -3,7 +3,10 @@ use crate::hash::H256;
 use crypto::dhash256;
 use hex::FromHex;
 use ser::{deserialize, serialize};
+use ser::{Deserializable, Error as ReaderError, Reader, Serializable, Stream};
+use serde::{Deserialize, Serialize};
 use std::fmt;
+use std::io;
 
 #[derive(PartialEq, Clone)]
 pub struct BlockHeader {
@@ -13,6 +16,23 @@ pub struct BlockHeader {
     pub time: u32,
     pub bits: Compact,
     pub nonce: u32,
+}
+
+// TODO this is a placeholder Serializable impl
+impl Serializable for BlockHeader {
+    fn serialize(&self, stream: &mut Stream) {}
+}
+
+// // TODO this is a placeholder Deserializable impl
+impl Deserializable for BlockHeader {
+    fn deserialize<T>(reader: &mut Reader<T>) -> Result<Self, ReaderError>
+    where
+        T: io::Read,
+    {
+        let data = r#try!(reader.read::<BlockHeader>());
+
+        Ok(data)
+    }
 }
 
 impl BlockHeader {

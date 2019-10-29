@@ -1,9 +1,28 @@
 use crate::hash::H96;
 use crate::Error;
-use std::{fmt, str};
+use ser::{Deserializable, Error as ReaderError, Reader, Serializable, Stream};
+use serde::{Deserialize, Serialize};
+use std::{fmt, io, str};
 
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub struct Command(H96);
+
+// TODO this is a placeholder Serializable impl
+impl Serializable for Command {
+	fn serialize(&self, stream: &mut Stream) {}
+}
+
+// // TODO this is a placeholder Deserializable impl
+impl Deserializable for Command {
+	fn deserialize<T>(reader: &mut Reader<T>) -> Result<Self, ReaderError>
+	where
+		T: io::Read,
+	{
+		let data = r#try!(reader.read::<Command>());
+
+		Ok(data)
+	}
+}
 
 impl str::FromStr for Command {
 	type Err = Error;
