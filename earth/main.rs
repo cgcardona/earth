@@ -31,6 +31,7 @@ use app_dirs::AppInfo;
 pub use clap::App;
 use commands::start;
 use config::parse;
+use config::Config;
 
 pub const USER_AGENT: &'static str = "/EARTH:0.0.1/";
 pub const REGTEST_USER_AGENT: &'static str = "/EARTH:0.0.1/";
@@ -55,6 +56,6 @@ fn main() {
 fn run() {
     let yml = load_yaml!("cli.yml");
     let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
-    let cfg = parse(&matches);
+    let cfg: Result<Config, String> = parse(&matches);
     println!("{:#?}", cfg);
 }
