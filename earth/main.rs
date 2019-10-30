@@ -28,7 +28,7 @@ mod seednodes;
 mod util;
 
 use app_dirs::AppInfo;
-pub use clap::App;
+pub use clap::{App, ArgMatches};
 use commands::start;
 use config::parse;
 use config::Config;
@@ -55,7 +55,7 @@ fn main() {
 
 fn run() {
     let yml = load_yaml!("cli.yml");
-    let matches: clap::ArgMatches<'_> = clap::App::from_yaml(yml).get_matches();
+    let matches: ArgMatches = clap::App::from_yaml(yml).get_matches();
     let cfg: Result<Config, String> = parse(&matches);
     println!("{:#?}", cfg);
 }
