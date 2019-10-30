@@ -6,23 +6,32 @@ EARTH <https://www.earth.engineering>
 EARTH client
 
 USAGE:
-    EARTH [FLAGS] [OPTIONS] [SUBCOMMAND]
+    EARTH [FLAGS] [OPTIONS]
 
 FLAGS:
-        --help          Prints help information
-        --regtest       Use a private network for regression tests.
-        --testnet       Use the test network (Testnet3).
-    -V, --version       Prints version information
+    -h, --help       Prints help information
+    -q, --quiet      Do not show any synchronization information in the console.
+        --regtest    Use a private network.
+        --testnet    Use the test network.
+    -V, --version    Prints version information
+
+OPTIONS:
+        --db-cache <SIZE>    Sets the database cache size.
+        --port <PORT>        Listen for connections on PORT.
 
 ```
 
 ## Usage
 
 ```
-./target/debug/EARTH --testnet
+./target/debug/EARTH --quiet  --testnet
 Ok(
-    Config {
+    Configuration {
         network: Testnet,
+        port: 18332,
+        db_cache: 512,
+        user_agent: "/EARTH:0.0.1/",
+        quiet: true,
     },
 )
 ```
