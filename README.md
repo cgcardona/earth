@@ -22,7 +22,7 @@ FLAGS:
 ./target/debug/EARTH --testnet
 Ok(
     Config {
-        network: Regtest,
+        network: Testnet,
     },
 )
 ```

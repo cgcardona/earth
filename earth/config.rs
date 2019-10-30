@@ -19,20 +19,22 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Config, String> {
         true => true,
         false => false,
     };
+    println!("is_testnet {}", is_testnet);
 
     let is_regtest: bool = match matches.is_present("regtest") {
         true => true,
         false => false,
     };
+    println!("is_regtest {}", is_regtest);
 
     let mut network: Network = Network::Regtest;
     if is_regtest == false && is_testnet == false {
         network = Network::Mainnet;
     } else if is_regtest == true && is_testnet == true {
         return Err("Must choose mainnet, testnet or regtest".into());
-    } else if is_regtest == false && is_testnet != true {
+    } else if is_regtest == false && is_testnet == true {
         network = Network::Testnet;
-    } else if is_regtest == true && is_testnet != false {
+    } else if is_regtest == true && is_testnet == false {
         network = Network::Regtest;
     }
 
