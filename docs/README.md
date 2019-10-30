@@ -3,3 +3,4 @@
 ## Table of Contents
 
 - [Getting Started](getting-started.md)
+- [Contributing](contributing.md)
