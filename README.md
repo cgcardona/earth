@@ -15,3 +15,18 @@ FLAGS:
     -V, --version       Prints version information
 
 ```
+
+## Usage
+
+```
+./target/debug/EARTH --testnet
+Ok(
+    Config {
+        network: Regtest,
+    },
+)
+```
+
+## Documentation
+
+Extensive [documentation](docs/README.md)
