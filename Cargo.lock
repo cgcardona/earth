@@ -39,15 +39,20 @@ dependencies = [
 
 [[package]]
 name = "earth"
-version = "0.1.0"
+version = "0.0.1"
 dependencies = [
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "network 0.0.1",
 ]
 
 [[package]]
 name = "libc"
 version = "0.2.65"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "network"
+version = "0.0.1"
 
 [[package]]
 name = "strsim"
