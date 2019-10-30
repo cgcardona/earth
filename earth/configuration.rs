@@ -42,7 +42,7 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
 
     let port: u16 = match matches.value_of("port") {
         Some(s) => s.parse().map_err(|_| "port is invalid".to_owned())?,
-        None => 8333,
+        None => network.port(),
     };
 
     let db_cache: usize = match matches.value_of("db-cache") {
