@@ -1,17 +1,14 @@
 #[macro_use]
 extern crate clap;
+
 mod config;
 
-pub use clap::{App, ArgMatches};
-use config::parse_input;
-use config::Config;
+use clap::ArgMatches;
+use config::{parse_input, Config};
 
 fn main() {
     ::std::env::set_var("RUST_BACKTRACE", "1");
     run();
-    // if let Err(err) = run() {
-    //     println!("{}", err);
-    // }
 }
 
 fn run() {
