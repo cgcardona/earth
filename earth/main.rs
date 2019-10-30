@@ -30,7 +30,7 @@ mod util;
 use app_dirs::AppInfo;
 pub use clap::{App, ArgMatches};
 use commands::start;
-use config::parse;
+use config::parse_input;
 use config::Config;
 
 pub const USER_AGENT: &'static str = "/EARTH:0.0.1/";
@@ -54,8 +54,8 @@ fn main() {
 }
 
 fn run() {
-    let yml = load_yaml!("cli.yml");
-    let matches: ArgMatches = clap::App::from_yaml(yml).get_matches();
-    let cfg: Result<Config, String> = parse(&matches);
-    println!("{:#?}", cfg);
+    let command_line_options = load_yaml!("command_line_options.yml");
+    let command_line_matches: ArgMatches = clap::App::from_yaml(command_line_options).get_matches();
+    let configuration: Result<Config, String> = parse_input(&command_line_matches);
+    println!("{:#?}", command_line_matches);
 }

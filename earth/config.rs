@@ -48,7 +48,7 @@ pub struct Config {
 
 pub const DEFAULT_DB_CACHE: usize = 512;
 
-pub fn parse(matches: &clap::ArgMatches) -> Result<Config, String> {
+pub fn parse_input(matches: &clap::ArgMatches) -> Result<Config, String> {
     let db_cache: usize = match matches.value_of("db-cache") {
         Some(s) => s
             .parse()

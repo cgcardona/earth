@@ -5,7 +5,7 @@ about: EARTH client
 args:
   - testnet:
       long: testnet
-      help: Use the test network (Testnet3).
+      help: Use the test network.
   - regtest:
       long: regtest
       help: Use a private network for regression tests.
@@ -97,11 +97,11 @@ args:
       value_name: BLOCK
 subcommands:
   - import:
-      about: Import blocks from a Bitcoin Cash database.
+      about: Import blocks from a database.
       args:
         - PATH:
             required: true
-            help: Path of the Bitcoin Cash database.
+            help: Path of the database.
   - rollback:
       about: Rollback the database to given canonical-chain block.
       args:
