@@ -10,22 +10,24 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 }
 
 #[derive(Debug)]
-pub struct Config {
+pub struct Configuration {
     network: Network,
+    port: u16,
+    db_cache: usize,
+    user_agent: String,
+    quiet: bool,
 }
 
-pub fn parse_input(matches: &clap::ArgMatches) -> Result<Config, String> {
+pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> {
     let is_testnet: bool = match matches.is_present("testnet") {
         true => true,
         false => false,
     };
-    println!("is_testnet {}", is_testnet);
 
     let is_regtest: bool = match matches.is_present("regtest") {
         true => true,
         false => false,
     };
-    println!("is_regtest {}", is_regtest);
 
     let mut network: Network = Network::Regtest;
     if is_regtest == false && is_testnet == false {
@@ -38,12 +40,25 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Config, String> {
         network = Network::Regtest;
     }
 
-    // let network: Network = match (matches.is_present("testnet"), matches.is_present("regtest")) {
-    //     (false, false) => Network::Mainnet,
-    //     (true, false) => Network::Testnet,
-    //     (false, true) => Network::Regtest,
-    //     (true, true) => return Err("Only one testnet option can be used".into()),
-    // };
+    let port: u16 = match matches.value_of("port") {
+        Some(s) => s.parse().map_err(|_| "port is invalid".to_owned())?,
+        None => 8333,
+    };
 
-    Ok(Config { network: network })
+    let db_cache: usize = match matches.value_of("db-cache") {
+        Some(s) => s.parse().map_err(|_| "db-cache is invalid".to_owned())?,
+        None => 512,
+    };
+
+    let user_agent: String = String::from("/EARTH:0.0.1/");
+
+    let quiet: bool = matches.is_present("quiet");
+
+    Ok(Configuration {
+        network: network,
+        port: port,
+        db_cache: db_cache,
+        user_agent: user_agent,
+        quiet: quiet,
+    })
 }

@@ -8,4 +8,18 @@ args:
       help: Use the test network.
   - regtest:
       long: regtest
-      help: Use a private network for regression tests.
+      help: Use a private network.
+  - port:
+      long: port
+      value_name: PORT
+      help: Listen for connections on PORT.
+      takes_value: true
+  - db-cache:
+      long: db-cache
+      value_name: SIZE
+      help: Sets the database cache size.
+      takes_value: true
+  - quiet:
+      short: q
+      long: quiet
+      help: Do not show any synchronization information in the console.
