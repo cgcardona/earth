@@ -71,3 +71,26 @@ Now Rust nightly is installed, but not activated. To test it out you can run a c
 rustup run nightly rustc --version
 rustc 1.40.0-nightly (aa69777ea 2019-10-29)
 ```
+
+### Default
+
+To make the `nightly` build your default:
+
+```
+rustup default nightly
+info: using existing install for 'nightly-x86_64-apple-darwin'
+info: default toolchain set to 'nightly-x86_64-apple-darwin'
+
+  nightly-x86_64-apple-darwin unchanged - rustc 1.40.0-nightly (aa69777ea 2019-10-29)
+
+```
+
+To make the `stable` build your default:
+
+```
+rustup default stable
+info: using existing install for 'stable-x86_64-apple-darwin'
+info: default toolchain set to 'stable-x86_64-apple-darwin'
+
+  stable-x86_64-apple-darwin unchanged - rustc 1.38.0 (625451e37 2019-09-23)
+```
