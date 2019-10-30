@@ -57,5 +57,5 @@ fn run() {
     let command_line_options = load_yaml!("command_line_options.yml");
     let command_line_matches: ArgMatches = clap::App::from_yaml(command_line_options).get_matches();
     let configuration: Result<Config, String> = parse_input(&command_line_matches);
-    println!("{:#?}", command_line_matches);
+    println!("{:#?}", configuration);
 }
