@@ -12,5 +12,6 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 pub struct Config {}
 
 pub fn parse_input(matches: &clap::ArgMatches) -> Result<Config, String> {
+    println!("{:#?}", matches);
     Ok(Config {})
 }
