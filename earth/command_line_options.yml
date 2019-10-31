@@ -19,6 +19,12 @@ args:
       value_name: SIZE
       help: Sets the database cache size
       takes_value: true
+  - data-dir:
+      short: d
+      long: data-dir
+      value_name: PATH
+      help: Specify the database and configuration directory PATH.
+      takes_value: true
   - quiet:
       short: q
       long: quiet

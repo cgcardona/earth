@@ -16,8 +16,10 @@ pub struct Configuration {
     db_cache: usize,
     user_agent: String,
     quiet: bool,
+    data_dir: Option<String>,
 }
 
+/// parse command line input
 pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> {
     let is_testnet: bool = match matches.is_present("testnet") {
         true => true,
@@ -54,11 +56,17 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
 
     let quiet: bool = matches.is_present("quiet");
 
+    let data_dir: Option<String> = match matches.value_of("data-dir") {
+        Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
+        None => None,
+    };
+
     Ok(Configuration {
         network: network,
         port: port,
         db_cache: db_cache,
         user_agent: user_agent,
         quiet: quiet,
+        data_dir: data_dir,
     })
 }
