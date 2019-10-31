@@ -7,7 +7,7 @@ mod subcommands;
 
 use clap::ArgMatches;
 pub use configuration::{parse_input, Configuration};
-use subcommands::import;
+use subcommands::{import, rollback, start};
 
 fn main() {
     ::std::env::set_var("RUST_BACKTRACE", "1");
@@ -30,6 +30,11 @@ fn run() {
         ("import", Some(matches)) => {
             import(&config, matches);
         }
-        _ => {}
+        ("rollback", Some(matches)) => {
+            rollback(&config, matches);
+        }
+        _ => {
+            start(&config);
+        }
     }
 }

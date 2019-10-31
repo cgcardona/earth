@@ -35,3 +35,9 @@ subcommands:
         - PATH:
             required: true
             help: Database path.
+  - rollback:
+      about: Rollback the database to block hash or number
+      args:
+        - BLOCK:
+            required: true
+            help: Block hash or number
