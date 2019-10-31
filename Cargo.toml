@@ -13,4 +13,3 @@ name = "earth"
 [dependencies]
 clap = { features = ["yaml"] }
 network = { path = "network" }
-commands = { path = "commands" }
