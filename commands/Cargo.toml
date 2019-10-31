@@ -1,16 +1,10 @@
 [package]
-name = "earth"
-version = "0.0.1"
+name = "commands"
+version = "0.1.0"
 authors = ["Gabriel Cardona <cgcardona@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[[bin]]
-path = "earth/main.rs"
-name = "earth"
-
 [dependencies]
 clap = { features = ["yaml"] }
-network = { path = "network" }
-commands = { path = "commands" }

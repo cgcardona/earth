@@ -19,6 +19,9 @@ OPTIONS:
         --db-cache <SIZE>    Sets the database cache size.
         --port <PORT>        Listen for connections on PORT.
 
+SUBCOMMANDS:
+    help      Prints this message or the help of the given subcommand(s)
+    import    Import blocks from a Bitcoin Core database.
 ```
 
 ## Usage

@@ -23,3 +23,10 @@ args:
       short: q
       long: quiet
       help: Do not show any synchronization information in the console.
+subcommands:
+  - import:
+      about: Import blocks from a database.
+      args:
+        - PATH:
+            required: true
+            help: Database path.
