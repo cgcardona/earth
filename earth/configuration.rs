@@ -11,7 +11,7 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 
 #[derive(Debug)]
 pub struct Configuration {
-    network: Network,
+    pub network: Network,
     port: u16,
     db_cache: usize,
     user_agent: String,

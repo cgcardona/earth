@@ -17,12 +17,17 @@ args:
   - db-cache:
       long: db-cache
       value_name: SIZE
-      help: Sets the database cache size.
+      help: Sets the database cache size
       takes_value: true
   - quiet:
       short: q
       long: quiet
-      help: Do not show any synchronization information in the console.
+      help: Don't show any synchronization information in the console
+  - verification-level:
+      long: verification-level
+      help: Set the blocks verification level to full (default), header (scripts are not verified), or none (no verification at all)
+      takes_value: true
+      value_name: LEVEL
 subcommands:
   - import:
       about: Import blocks from a database.
