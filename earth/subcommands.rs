@@ -1,7 +1,8 @@
 use crate::seeders::{mainnet_seeders, testnet_seeders};
 use crate::Configuration;
-use database::{delete, read, write};
-use mock_data::{block_mock_data, Block};
+use blockchain::Block;
+use database::*;
+use mock_data::block_mock_data;
 use std::{fs, path::PathBuf};
 
 /// imports blockchain data
@@ -51,9 +52,9 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
     let key: &str = "foo";
     let serialized = serde_json::to_string(&b0).unwrap();
 
-    assert!(write(key, serialized).is_ok());
+    assert!(database::write(key, serialized).is_ok());
 
-    match read(key) {
+    match database::read(key) {
         Ok(Some(value)) => match value.to_utf8() {
             Some(v) => println!("Reading key: {} and value: {} from rocksdb", key, v),
             None => println!("did not read valid utf-8 out of the db"),
@@ -62,7 +63,7 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
         Err(e) => println!("error retrieving value: {}", e),
     }
 
-    assert!(delete(key).is_ok());
+    assert!(database::delete(key).is_ok());
 
     p
 }
