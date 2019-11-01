@@ -1,3 +1,4 @@
+use crate::{mainnet_seeders, testnet_seeders};
 use clap;
 use network::Network;
 use std::collections::hash_map::DefaultHasher;
@@ -17,6 +18,7 @@ pub struct Configuration {
     db_cache: usize,
     user_agent: String,
     quiet: bool,
+    seeders: Vec<String>,
 }
 
 /// parse command line input
@@ -57,8 +59,16 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
     let quiet: bool = matches.is_present("quiet");
 
     let data_dir: Option<String> = match matches.value_of("data-dir") {
-        Some(s) => Some(s.parse().map_err(|_| "Invalid data-dir".to_owned())?),
+        Some(s) => Some(s.parse().map_err(|_| "Error".to_owned())?),
         None => None,
+    };
+
+    let seeders: Vec<String> = match matches.value_of("seednode") {
+        Some(s) => vec![s.parse().map_err(|_| "Error".to_owned())?],
+        None => match network {
+            Network::Mainnet => mainnet_seeders(),
+            Network::Testnet | Network::Regtest => testnet_seeders(),
+        },
     };
 
     Ok(Configuration {
@@ -68,5 +78,6 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
         user_agent: user_agent,
         quiet: quiet,
         data_dir: data_dir,
+        seeders: seeders,
     })
 }

@@ -19,6 +19,7 @@ OPTIONS:
     -d, --data-dir <PATH>               Specify the database and configuration directory PATH.
         --db-cache <SIZE>               Sets the database cache size
         --port <PORT>                   Listen for connections on PORT.
+    -s, --seednode <IP>                 Connect to a seed node for peer addresses
         --verification-level <LEVEL>    Set the blocks verification level to full (default), header (scripts are not
                                         verified), or none (no verification at all)
 

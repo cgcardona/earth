@@ -34,6 +34,12 @@ args:
       help: Set the blocks verification level to full (default), header (scripts are not verified), or none (no verification at all)
       takes_value: true
       value_name: LEVEL
+  - seednode:
+      short: s
+      long: seednode
+      value_name: IP
+      help: Connect to a seed node for peer addresses
+      takes_value: true
 subcommands:
   - import:
       about: Import blocks from a database.
