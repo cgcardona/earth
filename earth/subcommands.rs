@@ -1,6 +1,6 @@
 use crate::seeders::{mainnet_seeders, testnet_seeders};
 use crate::Configuration;
-use mock_data::{block_mock, Block};
+use mock_data::{block_mock_data, Block};
 use rocksdb::DB;
 use std::{fs, path::PathBuf};
 
@@ -48,7 +48,7 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
 
     let db: rocksdb::DB = DB::open_default(&p).unwrap();
 
-    let b0: Block = mock_data::block_mock();
+    let b0: Block = mock_data::block_mock_data();
 
     let key: &str = "foo";
     let serialized = serde_json::to_string(&b0).unwrap();
