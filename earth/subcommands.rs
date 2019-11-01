@@ -16,12 +16,21 @@ pub fn rollback(configuration: &Configuration, matches: &clap::ArgMatches) {
 
 /// start EARTH client with command line arguments
 pub fn start(configuration: Configuration) {
+    start_db(&configuration);
+    start_p2p(&configuration);
+}
+
+/// Start database setup
+fn start_db(configuration: &Configuration) {
     // create db directory
     match configuration.data_dir {
         Some(ref data_dir) => create_data_dir(&data_dir, "db"),
         None => create_data_dir("data-dir", "db"),
     };
+}
 
+/// Start p2p connections
+fn start_p2p(configuration: &Configuration) {
     // create p2p directory
     match configuration.data_dir {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
