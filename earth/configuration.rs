@@ -12,11 +12,11 @@ pub fn calculate_hash<T: Hash>(t: &T) -> u64 {
 #[derive(Debug)]
 pub struct Configuration {
     pub network: Network,
+    pub data_dir: Option<String>,
     port: u16,
     db_cache: usize,
     user_agent: String,
     quiet: bool,
-    data_dir: Option<String>,
 }
 
 /// parse command line input

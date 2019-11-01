@@ -21,7 +21,8 @@ fn run() {
     // detect configuration from command line
     let configuration: Result<Configuration, String> =
         configuration::parse_input(&command_line_matches);
-    println!("Configuration: {:#?}", &configuration);
+
+    println!("configuration: {:#?}", &configuration);
 
     let config: Configuration = configuration.unwrap();
 
@@ -34,7 +35,7 @@ fn run() {
             rollback(&config, matches);
         }
         _ => {
-            start(&config);
+            start(config);
         }
     }
 }
