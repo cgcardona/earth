@@ -1,5 +1,6 @@
 use crate::seeders::{mainnet_seeders, testnet_seeders};
 use crate::Configuration;
+use mock_data::{block_mock, Block};
 use rocksdb::DB;
 use std::{fs, path::PathBuf};
 
@@ -47,19 +48,21 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
 
     let db: rocksdb::DB = DB::open_default(&p).unwrap();
 
+    let b0: Block = mock_data::block_mock();
+
     let key: &str = "foo";
-    let value: &str = "bar";
+    let serialized = serde_json::to_string(&b0).unwrap();
 
-    assert!(db.put(key, value).is_ok());
+    assert!(db.put(key, serialized).is_ok());
 
-    // match db.get(key) {
-    //     Ok(Some(value)) => match value.to_utf8() {
-    //         Some(v) => println!("Reading key: {} and value: {} from rocksdb", key, v),
-    //         None => println!("did not read valid utf-8 out of the db"),
-    //     },
-    //     Ok(None) => panic!("value not present!"),
-    //     Err(e) => println!("error retrieving value: {}", e),
-    // }
+    match db.get(key) {
+        Ok(Some(value)) => match value.to_utf8() {
+            Some(v) => println!("Reading key: {} and value: {} from rocksdb", key, v),
+            None => println!("did not read valid utf-8 out of the db"),
+        },
+        Ok(None) => panic!("value not present!"),
+        Err(e) => println!("error retrieving value: {}", e),
+    }
 
     assert!(db.delete(key).is_ok());
 
