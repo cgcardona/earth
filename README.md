@@ -30,9 +30,9 @@ SUBCOMMANDS:
 
 ## Usage
 
-**WARNING** `earth --data-dir foobar` will create a `./foobar/` directory in the root directory from which you ran the command. It will create recursive directories: `earth --data-dir foo/bar`
+**WARNING** `earth --data-dir foobar` will create `./foobar/db/` and `./foobar/p2p/` directories in the root directory from which you ran the command. It will create recursive directories: `earth --data-dir foo/bar`
 
-If you don't pass in a `--data-dir` flag then a `./data-dir/` directory will be created in the root directory from which you ran the command.
+If you don't pass in a `--data-dir` flag then `./data-dir/db/` and `./data-dir/p2p/` directories will be created in the root directory from which you ran the command.
 
 ```
 ./target/debug/earth
