@@ -3,36 +3,36 @@ use std::{fs::create_dir_all, path::PathBuf};
 // use network::Network;
 
 /// imports blockchain data
-pub fn import(configuration: &Configuration, matches: &clap::ArgMatches) {
-    let genesis: String = configuration.network.genesis();
+pub fn import(c: &Configuration, matches: &clap::ArgMatches) {
+    let genesis: String = c.network.genesis();
     let import_path: &str = matches.value_of("PATH").unwrap();
     println!("IMPORT: {:#?}, {}, {}", matches, genesis, import_path);
 }
 
 /// Rollback the database to block hash or number
-pub fn rollback(configuration: &Configuration, matches: &clap::ArgMatches) {
-    println!("ROLLBACK: {:#?}, {:#?}", configuration, matches);
+pub fn rollback(c: &Configuration, matches: &clap::ArgMatches) {
+    println!("ROLLBACK: {:#?}, {:#?}", c, matches);
 }
 
 /// start EARTH client with command line arguments
-pub fn start(configuration: Configuration) {
-    start_db(&configuration);
-    start_p2p(&configuration);
+pub fn start(c: Configuration) {
+    start_db(&c);
+    start_p2p(&c);
 }
 
 /// Start database setup
-fn start_db(configuration: &Configuration) {
+fn start_db(c: &Configuration) {
     // create db directory
-    match configuration.data_dir {
+    match c.data_dir {
         Some(ref data_dir) => create_data_dir(&data_dir, "db"),
         None => create_data_dir("data-dir", "db"),
     };
 }
 
 /// Start p2p connections
-fn start_p2p(configuration: &Configuration) {
+fn start_p2p(c: &Configuration) {
     // create p2p directory
-    match configuration.data_dir {
+    match c.data_dir {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
         None => create_p2p_dir("data-dir", "p2p"),
     };
