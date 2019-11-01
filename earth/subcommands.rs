@@ -42,9 +42,8 @@ fn start_p2p(c: &Configuration) {
 /// create data_dir if it doesn't exist
 fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
     let p: PathBuf = [data_dir, sub].iter().collect();
-    fs::create_dir_all(&p).expect("Failed to get app dir");
 
-    let p: PathBuf = [data_dir, sub].iter().collect();
+    fs::create_dir_all(&p).expect("Failed to get app dir");
 
     let db: rocksdb::DB = DB::open_default(&p).unwrap();
 
