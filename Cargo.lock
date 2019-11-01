@@ -264,6 +264,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "database"
+version = "0.1.0"
+dependencies = [
+ "rocksdb 0.12.4 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "dtoa"
 version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -273,6 +280,7 @@ name = "earth"
 version = "0.0.1"
 dependencies = [
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "database 0.1.0",
  "mock_data 0.1.0",
  "network 0.0.1",
  "reqwest 0.9.22 (registry+https://github.com/rust-lang/crates.io-index)",

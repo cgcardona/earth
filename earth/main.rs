@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate clap;
+extern crate database;
 extern crate mock_data;
 extern crate network;
 
