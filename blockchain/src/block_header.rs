@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// BlockHeader struct
 #[derive(Serialize, Deserialize, Debug)]
 pub struct BlockHeader {
     pub version: u32,

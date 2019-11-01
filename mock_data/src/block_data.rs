@@ -1,5 +1,6 @@
 use blockchain::{Block, BlockHeader, Transaction, TxInput, TxOutput};
 
+/// mock block data for tests
 pub fn block_mock_data() -> Block {
     Block {
         block_header: BlockHeader {
