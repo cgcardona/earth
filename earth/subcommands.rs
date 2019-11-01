@@ -47,24 +47,6 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
 
     fs::create_dir_all(&p).expect("Failed to get app dir");
 
-    let b0: Block = mock_data::block_mock_data();
-
-    let key: &str = "foo";
-    let serialized = serde_json::to_string(&b0).unwrap();
-
-    assert!(database::write(key, serialized).is_ok());
-
-    match database::read(key) {
-        Ok(Some(value)) => match value.to_utf8() {
-            Some(v) => println!("Reading key: {} and value: {} from rocksdb", key, v),
-            None => println!("did not read valid utf-8 out of the db"),
-        },
-        Ok(None) => panic!("value not present!"),
-        Err(e) => println!("error retrieving value: {}", e),
-    }
-
-    assert!(database::delete(key).is_ok());
-
     p
 }
 

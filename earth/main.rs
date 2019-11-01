@@ -7,6 +7,7 @@ extern crate network;
 mod configuration;
 mod seeders;
 mod subcommands;
+mod test;
 
 use clap::ArgMatches;
 pub use configuration::{parse_input, Configuration};
