@@ -1,5 +1,6 @@
 use crate::seeders::{mainnet_seeders, testnet_seeders};
 use crate::Configuration;
+use rocksdb::DB;
 use std::{fs, path::PathBuf};
 
 /// imports blockchain data
@@ -42,6 +43,27 @@ fn start_p2p(c: &Configuration) {
 fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
     let p: PathBuf = [data_dir, sub].iter().collect();
     fs::create_dir_all(&p).expect("Failed to get app dir");
+
+    let p: PathBuf = [data_dir, sub].iter().collect();
+
+    let db: rocksdb::DB = DB::open_default(&p).unwrap();
+
+    let key: &str = "foo";
+    let value: &str = "bar";
+
+    assert!(db.put(key, value).is_ok());
+
+    // match db.get(key) {
+    //     Ok(Some(value)) => match value.to_utf8() {
+    //         Some(v) => println!("Reading key: {} and value: {} from rocksdb", key, v),
+    //         None => println!("did not read valid utf-8 out of the db"),
+    //     },
+    //     Ok(None) => panic!("value not present!"),
+    //     Err(e) => println!("error retrieving value: {}", e),
+    // }
+
+    assert!(db.delete(key).is_ok());
+
     p
 }
 

@@ -13,3 +13,4 @@ name = "earth"
 [dependencies]
 clap = { features = ["yaml"] }
 network = { path = "network" }
+rocksdb = "0.12.4"
