@@ -36,20 +36,29 @@ SUBCOMMANDS:
 If you don't pass in a `--data-dir` flag then `./data-dir/db/` and `./data-dir/p2p/` directories will be created in the root directory from which you ran the command.
 
 ```
-./target/debug/earth
+./target/debug/earth --data-dir r/e/w/t/r/e/w
 configuration: Ok(
     Configuration {
         network: Mainnet,
-        data_dir: None,
+        data_dir: Some(
+            "r/e/w/t/r/e/w",
+        ),
         port: 8332,
         db_cache: 512,
         user_agent: "/EARTH:0.0.1/",
         quiet: false,
+        seeders: [
+            "seed.bitcoinabc.org:8333",
+            "seed-abc.bitcoinforks.org:8333",
+            "seed.bitprim.org:8333",
+            "seed.deadalnix.me:8333",
+            "seeder.criptolayer.net:8333",
+        ],
     },
 )
 
 ll
-drwxr-xr-x  2 username group 64B Nov  1 10:06 data-dir
+drwxr-xr-x  2 username group 64B Nov  1 10:06 r
 ```
 
 ## Documentation
