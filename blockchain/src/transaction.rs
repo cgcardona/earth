@@ -10,18 +10,26 @@ pub struct Transaction {
 
 impl From<&'static str> for Transaction {
     fn from(s: &'static str) -> Self {
+        let inputs = vec![TxInput {
+            sequence: 1,
+            script_sig: String::from(s),
+            prev_out: PrevOut {},
+        }];
+        let outputs = vec![TxOutput {
+            value: 1,
+            script_pubkey: String::from(s),
+        }];
+        Transaction::new(1, 1, inputs, outputs)
+    }
+}
+
+impl Transaction {
+    pub fn new(version: u32, lock_time: u32, inputs: Vec<TxInput>, outputs: Vec<TxOutput>) -> Self {
         Transaction {
-            version: 1,
-            lock_time: 1,
-            inputs: vec![TxInput {
-                sequence: 1,
-                script_sig: String::from(s),
-                prev_out: PrevOut {},
-            }],
-            outputs: vec![TxOutput {
-                value: 1,
-                script_pubkey: String::from(s),
-            }],
+            version: version,
+            lock_time: lock_time,
+            inputs: inputs,
+            outputs: outputs,
         }
     }
 }
@@ -35,10 +43,16 @@ pub struct TxInput {
 
 impl From<&'static str> for TxInput {
     fn from(s: &'static str) -> Self {
+        TxInput::new(1, String::from(s), PrevOut {})
+    }
+}
+
+impl TxInput {
+    pub fn new(sequence: u32, script_sig: String, prev_out: PrevOut) -> Self {
         TxInput {
-            sequence: 1,
-            script_sig: String::from(s),
-            prev_out: PrevOut {},
+            sequence: sequence,
+            script_sig: script_sig,
+            prev_out: prev_out,
         }
     }
 }
@@ -48,6 +62,12 @@ pub struct PrevOut {}
 
 impl From<&'static str> for PrevOut {
     fn from(s: &'static str) -> Self {
+        PrevOut::new()
+    }
+}
+
+impl PrevOut {
+    pub fn new() -> Self {
         PrevOut {}
     }
 }
@@ -60,9 +80,15 @@ pub struct TxOutput {
 
 impl From<&'static str> for TxOutput {
     fn from(s: &'static str) -> Self {
+        TxOutput::new(1, String::from(s))
+    }
+}
+
+impl TxOutput {
+    pub fn new(value: u64, script_pubkey: String) -> Self {
         TxOutput {
-            value: 1,
-            script_pubkey: String::from(s),
+            value: value,
+            script_pubkey: script_pubkey,
         }
     }
 }

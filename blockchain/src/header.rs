@@ -12,15 +12,30 @@ pub struct Header {
     pub merkle_hash: String,
 }
 
+/// impl from for Header
 impl From<&'static str> for Header {
     fn from(s: &'static str) -> Self {
+        Header::new(1, 1, 1, 1, String::from(s), String::from(s))
+    }
+}
+
+/// impl Header
+impl Header {
+    pub fn new(
+        version: u32,
+        time: u32,
+        bits: u32,
+        nonce: u32,
+        prev_hash: String,
+        merkle_hash: String,
+    ) -> Self {
         Header {
-            version: 1,
-            time: 1,
-            bits: 1,
-            nonce: 1,
-            prev_hash: String::from(s),
-            merkle_hash: String::from(s),
+            version: version,
+            time: time,
+            bits: bits,
+            nonce: nonce,
+            prev_hash: prev_hash,
+            merkle_hash: merkle_hash,
         }
     }
 }
