@@ -1,9 +1,13 @@
-// use crate::seeders::{mainnet_seeders, testnet_seeders};
 use crate::Configuration;
+use blockchain::Block;
+use database::Storage;
+use mock_data::block_mock_data;
+use std::{fs, path::PathBuf};
+
+// use crate::seeders::{mainnet_seeders, testnet_seeders};
 // use blockchain::Block;
 // use database::*;
 // use mock_data::block_mock_data;
-use std::{fs, path::PathBuf};
 
 /// imports blockchain data
 pub fn import(c: &Configuration, m: &clap::ArgMatches) {
@@ -30,6 +34,25 @@ fn start_db(c: &Configuration) {
         Some(ref data_dir) => create_data_dir(&data_dir, "db"),
         None => create_data_dir("data-dir", "db"),
     };
+
+    match c.data_dir {
+        Some(ref data_dir) => create_data_dir(&data_dir, "db"),
+        None => create_data_dir("data-dir", "db"),
+    };
+
+    let data_dir: String = match c.data_dir {
+        Some(ref data_dir) => String::from(data_dir),
+        None => String::from("data-dir"),
+    };
+
+    let b0: Block = mock_data::block_mock_data();
+
+    let key: &str = "foo";
+    let serialized = serde_json::to_string(&b0).unwrap();
+
+    let s: Storage = Storage::new(data_dir);
+    println!("FOO {:#?}", s.data_dir);
+    assert!(s.write(key, serialized).is_ok());
 }
 
 /// Start p2p connections

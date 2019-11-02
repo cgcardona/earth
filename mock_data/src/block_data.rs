@@ -1,5 +1,17 @@
 use blockchain::{Block, Header, PrevOut, Transaction, TxInput, TxOutput};
 
+pub fn timestamps() -> [i32; 3] {
+    [1509343584; 3]
+}
+
+pub fn nonces() -> [i64; 3] {
+    [3604508752; 3]
+}
+
+pub fn bits() -> [&'static str; 3] {
+    ["1809b91a"; 3]
+}
+
 /// mock block data for tests
 pub fn block_mock_data() -> Block {
     Block {
