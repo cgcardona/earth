@@ -19,13 +19,6 @@ pub fn rollback(c: &Configuration, matches: &clap::ArgMatches) {
 
 /// start EARTH client with command line arguments
 pub fn start(c: Configuration) {
-    let f: Block = Block::from("foooooobar");
-    println!("f {:#?}", f);
-    // let b: Block = Block::from("foooooobar");
-    // let d: String = b.into();
-    // let j: Block = d.into();
-    // println!("FUFUFUF {:#?}", d);
-
     start_db(&c);
     start_p2p(&c);
 }
