@@ -10,3 +10,16 @@ pub struct BlockHeader {
     pub prev_hash: String,
     pub merkle_hash: String,
 }
+
+impl From<&'static str> for BlockHeader {
+    fn from(s: &'static str) -> Self {
+        BlockHeader {
+            version: 1,
+            time: 1,
+            bits: 1,
+            nonce: 1,
+            prev_hash: String::from(s),
+            merkle_hash: String::from(s),
+        }
+    }
+}

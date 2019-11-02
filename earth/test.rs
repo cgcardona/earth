@@ -6,12 +6,14 @@ mod tests {
     #[test]
 
     fn insert_block() {
-        let b0: Block = mock_data::block_mock_data();
+        let f: Block = Block::from("foooooobar");
+        println!("{:#?}", f);
+        // let b0: Block = mock_data::block_mock_data();
 
-        let key: &str = "foo";
-        let serialized = serde_json::to_string(&b0).unwrap();
+        // let key: &str = "foo";
+        // let serialized = serde_json::to_string(&b0).unwrap();
 
-        assert!(database::write(key, serialized).is_ok());
+        // assert!(database::write(key, serialized).is_ok());
     }
 
     // #[test]
