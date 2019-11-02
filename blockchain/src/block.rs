@@ -1,16 +1,16 @@
-use crate::{BlockHeader, PrevOut, Transaction, TxInput, TxOutput};
+use crate::{Header, PrevOut, Transaction, TxInput, TxOutput};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Block {
-    pub block_header: BlockHeader,
+    pub header: Header,
     pub transactions: Vec<Transaction>,
 }
 
 impl From<&'static str> for Block {
     fn from(s: &'static str) -> Self {
         Block {
-            block_header: BlockHeader {
+            header: Header {
                 version: 1,
                 time: 1,
                 bits: 1,

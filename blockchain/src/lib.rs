@@ -1,7 +1,7 @@
 mod block;
-mod block_header;
+mod header;
 mod transaction;
 
 pub use block::Block;
-pub use block_header::BlockHeader;
+pub use header::Header;
 pub use transaction::{PrevOut, Transaction, TxInput, TxOutput};

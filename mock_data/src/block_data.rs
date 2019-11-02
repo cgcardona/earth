@@ -1,9 +1,9 @@
-use blockchain::{Block, BlockHeader, PrevOut, Transaction, TxInput, TxOutput};
+use blockchain::{Block, Header, PrevOut, Transaction, TxInput, TxOutput};
 
 /// mock block data for tests
 pub fn block_mock_data() -> Block {
     Block {
-        block_header: BlockHeader {
+        header: Header {
             version: 1,
             time: 1,
             bits: 1,
