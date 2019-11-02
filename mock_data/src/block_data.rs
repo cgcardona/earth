@@ -1,4 +1,4 @@
-use blockchain::{Block, BlockHeader, Transaction, TxInput, TxOutput};
+use blockchain::{Block, BlockHeader, PrevOut, Transaction, TxInput, TxOutput};
 
 /// mock block data for tests
 pub fn block_mock_data() -> Block {
@@ -14,8 +14,15 @@ pub fn block_mock_data() -> Block {
         transactions: vec![Transaction {
             version: 1,
             lock_time: 1,
-            inputs: vec![TxInput {}],
-            outputs: vec![TxOutput {}],
+            inputs: vec![TxInput {
+                sequence: 1,
+                script_sig: String::from(""),
+                prev_out: PrevOut {},
+            }],
+            outputs: vec![TxOutput {
+                value: 1,
+                script_pubkey: String::from(""),
+            }],
         }],
     }
 }
