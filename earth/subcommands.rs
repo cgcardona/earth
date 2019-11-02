@@ -6,15 +6,15 @@ use crate::Configuration;
 use std::{fs, path::PathBuf};
 
 /// imports blockchain data
-pub fn import(c: &Configuration, matches: &clap::ArgMatches) {
-    let genesis: String = c.network.genesis();
-    let import_path: &str = matches.value_of("PATH").unwrap();
-    println!("IMPORT: {:#?}, {}, {}", matches, genesis, import_path);
+pub fn import(c: &Configuration, m: &clap::ArgMatches) {
+    let g: &str = c.network.genesis();
+    let i: &str = m.value_of("PATH").unwrap();
+    println!("IMPORT: {:#?}, {}, {}", m, g, i);
 }
 
 /// Rollback the database to block hash or number
-pub fn rollback(c: &Configuration, matches: &clap::ArgMatches) {
-    println!("ROLLBACK: {:#?}, {:#?}", c, matches);
+pub fn rollback(c: &Configuration, m: &clap::ArgMatches) {
+    println!("ROLLBACK: {:#?}, {:#?}", c, m);
 }
 
 /// start EARTH client with command line arguments
@@ -53,6 +53,8 @@ fn create_data_dir(data_dir: &str, sub: &str) -> PathBuf {
 /// create p2p directory if it doesn't exist
 fn create_p2p_dir(p2p: &str, sub: &str) -> PathBuf {
     let p: PathBuf = [p2p, sub].iter().collect();
+
     fs::create_dir_all(&p).expect("Failed to get p2p dir");
+
     p
 }

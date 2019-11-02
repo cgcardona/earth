@@ -8,6 +8,7 @@ mod tests {
     fn insert_block() {
         let f: Block = Block::from("foooooobar");
         println!("{:#?}", f);
+        assert_eq!(1, 2);
         // let b0: Block = mock_data::block_mock_data();
 
         // let key: &str = "foo";
