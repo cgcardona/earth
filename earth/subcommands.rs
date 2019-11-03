@@ -46,7 +46,7 @@ fn start_db(c: &Configuration) {
 
     for x in 0..32 {
         let b: Block = mock_data::block_mock_data(x);
-        println!("Block: {:#?}", b);
+        // println!("Block: {:#?}", b);
         let key: &str = &format!("{}{}", "foo", x);
         // println!("Key: {:#?}", key);
         let serialized0 = serde_json::to_string(&b).unwrap();
