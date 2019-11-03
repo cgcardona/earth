@@ -12,12 +12,14 @@ pub struct Transaction {
 
 impl Transaction {
     pub fn new(version: u32, lock_time: u32, inputs: Vec<TxInput>, outputs: Vec<TxOutput>) -> Self {
-        Transaction {
-            version: version,
-            lock_time: lock_time,
-            inputs: inputs,
-            outputs: outputs,
-        }
+        Default::default()
+
+        // Transaction {
+        //     version: version,
+        //     lock_time: lock_time,
+        //     inputs: inputs,
+        //     outputs: outputs,
+        // }
     }
 }
 
@@ -26,15 +28,8 @@ impl Default for Transaction {
         Transaction {
             version: Default::default(),
             lock_time: Default::default(),
-            inputs: vec![TxInput {
-                sequence: 1,
-                script_sig: String::from(""),
-                prev_out: PrevOut {},
-            }],
-            outputs: vec![TxOutput {
-                value: 1,
-                script_pubkey: String::from(""),
-            }],
+            inputs: vec![Default::default()],
+            outputs: vec![Default::default()],
         }
     }
 }

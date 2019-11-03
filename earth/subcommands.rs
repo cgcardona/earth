@@ -43,7 +43,7 @@ fn start_db(c: &Configuration) {
     let s: Storage = Storage::new(data_dir);
 
     let b: Block = Block::new(None, None);
-    println!("Block: {:#?}", b);
+    // println!("Block: {:#?}", b);
 
     // for x in 0..1 {
     //     let b: Block = mock_data::block_mock_data(x);

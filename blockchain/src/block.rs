@@ -31,7 +31,7 @@ impl Default for Block {
     fn default() -> Self {
         Block {
             header: Default::default(),
-            transactions: Default::default(),
+            transactions: vec![Default::default()],
         }
     }
 }
