@@ -42,17 +42,18 @@ fn start_db(c: &Configuration) {
 
     let s: Storage = Storage::new(data_dir);
 
-    let b: Block = Block::new(None, None);
-    // println!("Block: {:#?}", b);
+    // let b: Block = Block::new(None, None);
 
-    // for x in 0..1 {
-    //     let b: Block = mock_data::block_mock_data(x);
-    //     let key: &str = &format!("{}{}", "foo", x);
-    //     let serialized0 = serde_json::to_string(&b).unwrap();
-    //     assert!(s.write(key, serialized0).is_ok());
-    //     assert!(s.read(key).is_ok());
-    //     assert!(s.delete(key).is_ok());
-    // }
+    for x in 0..32 {
+        let b: Block = mock_data::block_mock_data(x);
+        println!("Block: {:#?}", b);
+        let key: &str = &format!("{}{}", "foo", x);
+        // println!("Key: {:#?}", key);
+        let serialized0 = serde_json::to_string(&b).unwrap();
+        assert!(s.write(key, serialized0).is_ok());
+        assert!(s.read(key).is_ok());
+        assert!(s.delete(key).is_ok());
+    }
 
     // let b0: Block = mock_data::block_mock_data();
     // let b1: Block = mock_data::block_mock_data();

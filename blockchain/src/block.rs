@@ -47,7 +47,7 @@ fn deserialize(s: &str) -> Block {
         header: Header {
             version: 1,
             time: 1,
-            bits: 1,
+            bits: String::from(s),
             nonce: 1,
             prev_hash: String::from(s),
             merkle_hash: String::from(s),

@@ -6,8 +6,8 @@ use std::fmt;
 pub struct Header {
     pub version: u32,
     pub time: u32,
-    pub bits: u32,
-    pub nonce: u32,
+    pub bits: String,
+    pub nonce: u64,
     pub prev_hash: String,
     pub merkle_hash: String,
 }
@@ -17,8 +17,8 @@ impl Header {
     pub fn new(
         version: u32,
         time: u32,
-        bits: u32,
-        nonce: u32,
+        bits: String,
+        nonce: u64,
         prev_hash: String,
         merkle_hash: String,
     ) -> Self {
@@ -49,7 +49,7 @@ impl Default for Header {
 /// impl from for Header
 impl From<&'static str> for Header {
     fn from(s: &'static str) -> Self {
-        Header::new(1, 1, 1, 1, String::from(s), String::from(s))
+        Header::new(1, 1, String::from(s), 1, String::from(s), String::from(s))
     }
 }
 
