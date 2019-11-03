@@ -25,6 +25,12 @@ impl Storage {
     ) -> std::result::Result<std::option::Option<rocksdb::DBVector>, rocksdb::Error> {
         let p: PathBuf = [&self.data_dir].iter().collect();
         let db: rocksdb::DB = DB::open_default(&p).unwrap();
+        match db.get(k) {
+            Ok(Some(value)) => println!("retrieved value {:#?}", value.to_utf8().unwrap()),
+            Ok(None) => println!("value not found"),
+            Err(e) => println!("operational problem encountered: {:#?}", e),
+        }
+
         db.get(k)
     }
 

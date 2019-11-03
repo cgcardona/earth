@@ -8,6 +8,35 @@ pub struct Transaction {
     pub outputs: Vec<TxOutput>,
 }
 
+impl Transaction {
+    pub fn new(version: u32, lock_time: u32, inputs: Vec<TxInput>, outputs: Vec<TxOutput>) -> Self {
+        Transaction {
+            version: version,
+            lock_time: lock_time,
+            inputs: inputs,
+            outputs: outputs,
+        }
+    }
+}
+
+impl Default for Transaction {
+    fn default() -> Self {
+        Transaction {
+            version: 1,
+            lock_time: 1,
+            inputs: vec![TxInput {
+                sequence: 1,
+                script_sig: String::from(""),
+                prev_out: PrevOut {},
+            }],
+            outputs: vec![TxOutput {
+                value: 1,
+                script_pubkey: String::from(""),
+            }],
+        }
+    }
+}
+
 impl From<&'static str> for Transaction {
     fn from(s: &'static str) -> Self {
         let inputs = vec![TxInput {
@@ -20,17 +49,6 @@ impl From<&'static str> for Transaction {
             script_pubkey: String::from(s),
         }];
         Transaction::new(1, 1, inputs, outputs)
-    }
-}
-
-impl Transaction {
-    pub fn new(version: u32, lock_time: u32, inputs: Vec<TxInput>, outputs: Vec<TxOutput>) -> Self {
-        Transaction {
-            version: version,
-            lock_time: lock_time,
-            inputs: inputs,
-            outputs: outputs,
-        }
     }
 }
 

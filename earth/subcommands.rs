@@ -35,24 +35,56 @@ fn start_db(c: &Configuration) {
         None => create_data_dir("data-dir", "db"),
     };
 
-    match c.data_dir {
-        Some(ref data_dir) => create_data_dir(&data_dir, "db"),
-        None => create_data_dir("data-dir", "db"),
-    };
-
     let data_dir: String = match c.data_dir {
         Some(ref data_dir) => String::from(data_dir),
         None => String::from("data-dir"),
     };
 
-    let b0: Block = mock_data::block_mock_data();
-
-    let key: &str = "foo";
-    let serialized = serde_json::to_string(&b0).unwrap();
-
     let s: Storage = Storage::new(data_dir);
-    println!("FOO {:#?}", s.data_dir);
-    assert!(s.write(key, serialized).is_ok());
+
+    // for x in 0..1 {
+    //     let b: Block = mock_data::block_mock_data(x);
+    //     let key: &str = &format!("{}{}", "foo", x);
+    //     let serialized0 = serde_json::to_string(&b).unwrap();
+    //     assert!(s.write(key, serialized0).is_ok());
+    //     assert!(s.read(key).is_ok());
+    //     assert!(s.delete(key).is_ok());
+    // }
+
+    // let b0: Block = mock_data::block_mock_data();
+    // let b1: Block = mock_data::block_mock_data();
+    // let b2: Block = mock_data::block_mock_data();
+    // let b3: Block = mock_data::block_mock_data();
+    // let b4: Block = mock_data::block_mock_data();
+
+    // let key0: &str = "foo0";
+    // let key1: &str = "foo1";
+    // let key2: &str = "foo2";
+    // let key3: &str = "foo3";
+    // let key4: &str = "foo4";
+
+    // let serialized0 = serde_json::to_string(&b0).unwrap();
+    // let serialized1 = serde_json::to_string(&b1).unwrap();
+    // let serialized2 = serde_json::to_string(&b2).unwrap();
+    // let serialized3 = serde_json::to_string(&b3).unwrap();
+    // let serialized4 = serde_json::to_string(&b4).unwrap();
+
+    // assert!(s.write(key0, serialized0).is_ok());
+    // assert!(s.write(key1, serialized1).is_ok());
+    // assert!(s.write(key2, serialized2).is_ok());
+    // assert!(s.write(key3, serialized3).is_ok());
+    // assert!(s.write(key4, serialized4).is_ok());
+    // assert!(s.read(key0).is_ok());
+    // assert!(s.read(key1).is_ok());
+    // assert!(s.read(key2).is_ok());
+    // assert!(s.read(key3).is_ok());
+    // assert!(s.read(key4).is_ok());
+    // assert!(s.delete(key0).is_ok());
+    // assert!(s.delete(key1).is_ok());
+    // assert!(s.delete(key2).is_ok());
+    // assert!(s.delete(key3).is_ok());
+    // assert!(s.delete(key4).is_ok());
+    // println!("FOO {:#?}", z);
 }
 
 /// Start p2p connections
