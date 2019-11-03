@@ -14,43 +14,10 @@ impl TxInput {
         script_sig: Option<String>,
         prev_out: Option<PrevOut>,
     ) -> Self {
-        match (sequence, script_sig, prev_out) {
-            (Some(s), Some(s_s), Some(p)) => TxInput {
-                sequence: s,
-                script_sig: s_s,
-                prev_out: p,
-            },
-            (None, Some(s_s), Some(p)) => TxInput {
-                sequence: Default::default(),
-                script_sig: s_s,
-                prev_out: p,
-            },
-            (Some(s), None, Some(p)) => TxInput {
-                sequence: s,
-                script_sig: Default::default(),
-                prev_out: p,
-            },
-            (Some(s), Some(s_s), None) => TxInput {
-                sequence: s,
-                script_sig: s_s,
-                prev_out: Default::default(),
-            },
-            (None, None, Some(p)) => TxInput {
-                sequence: Default::default(),
-                script_sig: Default::default(),
-                prev_out: p,
-            },
-            (None, Some(s_s), None) => TxInput {
-                sequence: Default::default(),
-                script_sig: s_s,
-                prev_out: Default::default(),
-            },
-            (Some(s), None, None) => TxInput {
-                sequence: s,
-                script_sig: Default::default(),
-                prev_out: Default::default(),
-            },
-            (None, None, None) => Default::default(),
+        TxInput {
+            sequence: sequence.unwrap_or(Default::default()),
+            script_sig: script_sig.unwrap_or(Default::default()),
+            prev_out: prev_out.unwrap_or(Default::default()),
         }
     }
 }

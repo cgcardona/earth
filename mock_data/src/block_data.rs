@@ -1,7 +1,7 @@
 use blockchain::{Block, Header, PrevOut, Transaction, TxInput, TxOutput};
 
-pub fn timestamps() -> [u32; 32] {
-    [1509343584; 32]
+pub fn timestamps() -> [usize; 100] {
+    [1509343584; 100]
 }
 
 pub fn nonces() -> [u64; 32] {
@@ -17,7 +17,7 @@ pub fn block_mock_data(iter: u32) -> Block {
     let timestamps = timestamps();
 
     let version: u32 = 1;
-    let time: u32 = timestamps[iter as usize];
+    let time: usize = timestamps[iter as usize];
     let bits: String = "1809b91a".into();
     let nonce: u64 = 3604508752;
     let prev_hash: String =

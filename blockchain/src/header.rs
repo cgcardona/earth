@@ -5,7 +5,7 @@ use std::fmt;
 #[derive(Serialize, Deserialize)]
 pub struct Header {
     pub version: u32,
-    pub time: u32,
+    pub time: usize,
     pub bits: String,
     pub nonce: u64,
     pub prev_hash: String,
@@ -16,7 +16,7 @@ pub struct Header {
 impl Header {
     pub fn new(
         version: u32,
-        time: u32,
+        time: usize,
         bits: String,
         nonce: u64,
         prev_hash: String,
