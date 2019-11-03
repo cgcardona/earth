@@ -9,20 +9,9 @@ pub struct Block {
 
 impl Block {
     pub fn new(header: Option<Header>, transactions: Option<Vec<Transaction>>) -> Self {
-        match (header, transactions) {
-            (Some(h), Some(t)) => Block {
-                header: h,
-                transactions: t,
-            },
-            (Some(h), None) => Block {
-                header: h,
-                transactions: Default::default(),
-            },
-            (None, Some(t)) => Block {
-                header: Default::default(),
-                transactions: t,
-            },
-            (None, None) => Default::default(),
+        Block {
+            header: header.unwrap_or(Default::default()),
+            transactions: transactions.unwrap_or(Default::default()),
         }
     }
 }

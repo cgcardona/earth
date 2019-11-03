@@ -8,23 +8,9 @@ pub struct TxOutput {
 
 impl TxOutput {
     pub fn new(value: Option<u64>, script_pubkey: Option<String>) -> Self {
-        match (value, script_pubkey) {
-            (Some(v), Some(s)) => TxOutput {
-                value: v,
-                script_pubkey: s,
-            },
-            (Some(v), None) => TxOutput {
-                value: v,
-                script_pubkey: Default::default(),
-            },
-            (None, Some(s)) => TxOutput {
-                value: Default::default(),
-                script_pubkey: s,
-            },
-            (None, None) => TxOutput {
-                value: Default::default(),
-                script_pubkey: Default::default(),
-            },
+        TxOutput {
+            value: value.unwrap_or(Default::default()),
+            script_pubkey: script_pubkey.unwrap_or(Default::default()),
         }
     }
 }
