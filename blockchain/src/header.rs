@@ -7,7 +7,7 @@ pub struct Header {
     pub version: u32,
     pub time: usize,
     pub bits: String,
-    pub nonce: u64,
+    pub nonce: usize,
     pub prev_hash: String,
     pub merkle_hash: String,
 }
@@ -18,7 +18,7 @@ impl Header {
         version: u32,
         time: usize,
         bits: String,
-        nonce: u64,
+        nonce: usize,
         prev_hash: String,
         merkle_hash: String,
     ) -> Self {

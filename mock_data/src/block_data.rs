@@ -1,25 +1,41 @@
 use blockchain::{Block, Header, PrevOut, Transaction, TxInput, TxOutput};
 
-pub fn timestamps() -> [usize; 100] {
-    [1509343584; 100]
+fn timestamps() -> [usize; 100] {
+    let mut a: [usize; 100] = [0; 100];
+    for x in 0..100 {
+        a[x] = 1509343584 + x;
+    }
+    a
 }
 
-pub fn nonces() -> [u64; 32] {
-    [3604508752; 32]
+fn nonces() -> [usize; 100] {
+    let mut a: [usize; 100] = [0; 100];
+    for x in 0..100 {
+        a[x] = 1509343584 + x;
+    }
+    a
 }
 
-pub fn bits() -> [&'static str; 32] {
-    ["1809b91a"; 32]
+fn bits() -> [&'static str; 100] {
+    // let mut a: [&str; 100] = [""; 100];
+    // for x in 0..32 {
+    //     a[x] = 1509343584 + x;
+    // }
+    // a
+    ["1809b91a"; 100]
 }
 
 /// mock block data for tests
 pub fn block_mock_data(iter: u32) -> Block {
-    let timestamps = timestamps();
+    let timestamps: [usize; 100] = timestamps();
+    let nonces: [usize; 100] = nonces();
+    let bits: [&str; 100] = bits();
 
     let version: u32 = 1;
+    let nonce: usize = nonces[iter as usize];
     let time: usize = timestamps[iter as usize];
+    // let bits: &str = bits[iter as &str];
     let bits: String = "1809b91a".into();
-    let nonce: u64 = 3604508752;
     let prev_hash: String =
         "000000000000000005e14d3f9fdfb70745308706615cfa9edca4f4558332b201".into();
     let merkle_hash: String =
