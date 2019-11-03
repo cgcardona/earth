@@ -24,8 +24,8 @@ impl Transaction {
 impl Default for Transaction {
     fn default() -> Self {
         Transaction {
-            version: 1,
-            lock_time: 1,
+            version: Default::default(),
+            lock_time: Default::default(),
             inputs: vec![TxInput {
                 sequence: 1,
                 script_sig: String::from(""),

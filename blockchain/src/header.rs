@@ -36,12 +36,12 @@ impl Header {
 impl Default for Header {
     fn default() -> Self {
         Header {
-            version: 1,
-            time: 1,
-            bits: 1,
-            nonce: 1,
-            prev_hash: String::from(""),
-            merkle_hash: String::from(""),
+            version: Default::default(),
+            time: Default::default(),
+            bits: Default::default(),
+            nonce: Default::default(),
+            prev_hash: Default::default(),
+            merkle_hash: Default::default(),
         }
     }
 }
