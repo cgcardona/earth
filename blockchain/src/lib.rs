@@ -1,7 +1,13 @@
 mod block;
 mod header;
+mod prevout;
 mod transaction;
+mod txinput;
+mod txoutput;
 
 pub use block::Block;
 pub use header::Header;
-pub use transaction::{PrevOut, Transaction, TxInput, TxOutput};
+pub use prevout::PrevOut;
+pub use transaction::Transaction;
+pub use txinput::TxInput;
+pub use txoutput::TxOutput;
