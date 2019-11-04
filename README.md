@@ -31,7 +31,7 @@ OPTIONS:
 
 SUBCOMMANDS:
     help        Prints this message or the help of the given subcommand(s)
-    import      Import blocks from a Bitcoin Core database.
+    import      Import blocks from a database.
     rollback    Rollback the database to given canonical-chain block.
 ```
 
