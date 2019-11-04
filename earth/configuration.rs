@@ -1,6 +1,10 @@
 use crate::{mainnet_seeders, testnet_seeders};
 use clap;
+use core::option::Option;
 use network::Network;
+use p2p::IP;
+use std::net;
+use std::net::SocketAddr;
 // use std::collections::hash_map::DefaultHasher;
 // use std::hash::{Hash, Hasher};
 
@@ -14,11 +18,16 @@ use network::Network;
 pub struct Configuration {
     pub network: Network,
     pub data_dir: Option<String>,
-    port: u16,
-    db_cache: usize,
-    user_agent: String,
-    quiet: bool,
-    seeders: Vec<String>,
+    pub port: u16,
+    pub db_cache: usize,
+    pub user_agent: String,
+    pub quiet: bool,
+    pub seeders: Vec<String>,
+    pub inbound_connections: u32,
+    pub outbound_connections: u32,
+    pub threads: u32,
+    pub connect: Option<net::SocketAddr>,
+    pub internet_protocol: IP,
 }
 
 /// parse command line input
@@ -43,6 +52,13 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
     } else if is_regtest == true && is_testnet == false {
         network = Network::Regtest;
     }
+
+    let (inbound_connections, outbound_connections, threads): (u32, u32, u32) = match network {
+        Network::Mainnet | Network::Testnet => (10, 10, 4),
+        Network::Regtest => (1, 0, 1),
+    };
+
+    let only_net: p2p::IP = IP::IPV4;
 
     let port: u16 = match matches.value_of("port") {
         Some(s) => s.parse().map_err(|_| "port is invalid".to_owned())?,
@@ -71,6 +87,17 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
         },
     };
 
+    let connect: Option<SocketAddr> = match matches.value_of("connect") {
+        Some(s) => Some(match s.parse::<net::SocketAddr>() {
+            Err(_) => s
+                .parse::<net::IpAddr>()
+                .map(|ip| net::SocketAddr::new(ip, network.port()))
+                .map_err(|_| "Invalid connect".to_owned()),
+            Ok(a) => Ok(a),
+        }?),
+        None => None,
+    };
+
     Ok(Configuration {
         network: network,
         port: port,
@@ -79,5 +106,10 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
         quiet: quiet,
         data_dir: data_dir,
         seeders: seeders,
+        inbound_connections: inbound_connections,
+        threads: threads,
+        outbound_connections: outbound_connections,
+        connect: connect,
+        internet_protocol: only_net,
     })
 }
