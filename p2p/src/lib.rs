@@ -1,9 +1,10 @@
 use ns_dns_tokio::DnsResolver;
 use tokio_core::reactor::{Core, Handle};
-// use std::io::Stderr;
 
 mod config;
+mod consensus;
 pub use config::{Config, NetConfig, IP};
+pub use consensus::{ConsensusParams, Deployment};
 
 pub struct P2P {
     handle: Handle,

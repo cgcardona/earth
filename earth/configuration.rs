@@ -2,7 +2,7 @@ use crate::{mainnet_seeders, testnet_seeders};
 use clap;
 use core::option::Option;
 use network::Network;
-use p2p::IP;
+use p2p::{ConsensusParams, Deployment, IP};
 use std::net;
 use std::net::SocketAddr;
 // use std::collections::hash_map::DefaultHasher;
@@ -13,19 +13,6 @@ use std::net::SocketAddr;
 //     t.hash(&mut s);
 //     s.finish()
 // }
-
-#[derive(Debug, Clone)]
-/// Parameters that influence chain consensus.
-pub struct ConsensusParams {
-    pub network: Network,
-    pub bip16_time: u32,
-    pub bip34_height: u32,
-    pub bip65_height: u32,
-    pub bip66_height: u32,
-    pub rule_change_activation_threshold: u32,
-    pub miner_confirmation_window: u32,
-    pub csv_deployment: Option<Deployment>,
-}
 
 #[derive(Debug)]
 pub struct Configuration {
@@ -42,15 +29,6 @@ pub struct Configuration {
     pub threads: u32,
     pub connect: Option<net::SocketAddr>,
     pub internet_protocol: IP,
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct Deployment {
-    pub name: &'static str,
-    pub bit: u8,
-    pub start_time: u32,
-    pub timeout: u32,
-    pub activation: Option<u32>,
 }
 
 /// parse command line input
