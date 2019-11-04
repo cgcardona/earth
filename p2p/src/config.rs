@@ -20,8 +20,8 @@ pub enum IP {
     IPV6,
 }
 
-#[derive(Debug)]
-pub struct Services(u64);
+// #[derive(Debug)]
+// pub struct Services(u64);
 
 #[derive(Debug)]
 pub struct NetConfig {
