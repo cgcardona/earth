@@ -23,14 +23,10 @@ fn run() {
     let command_line_matches: ArgMatches = clap::App::from_yaml(command_line_options).get_matches();
 
     // detect configuration from command line
-    let configuration: Result<Configuration, String> =
-        configuration::parse_input(&command_line_matches);
-
+    let config: Configuration = configuration::parse_input(&command_line_matches).unwrap();
     // println!("configuration: {:#?}", &configuration);
 
-    let config: Configuration = configuration.unwrap();
-
-    // detect subcommands (import)
+    // detect subcommand
     match command_line_matches.subcommand() {
         ("import", Some(matches)) => {
             import(&config, matches);
@@ -39,6 +35,7 @@ fn run() {
             rollback(&config, matches);
         }
         _ => {
+            // run `start` subcommand by default
             start(config);
         }
     }
