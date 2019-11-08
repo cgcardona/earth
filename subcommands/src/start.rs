@@ -26,10 +26,12 @@ fn start_db(c: &Configuration) {
 /// Start p2p connections
 fn start_p2p(c: Configuration) {
     // create p2p directory
-    let node_table_path: PathBuf = match c.data_dir {
+    let mut node_table_path: PathBuf = match c.data_dir {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
         None => create_p2p_dir("data-dir", "p2p"),
     };
+
+    node_table_path.push("nodes.csv");
 
     let p2p_config: Config = Config {
         outbound_connections: c.outbound_connections,
