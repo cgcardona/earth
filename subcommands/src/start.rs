@@ -17,10 +17,10 @@ fn start_db(c: &Configuration) {
         None => create_data_dir("data-dir", "db"),
     };
 
-    let data_dir: String = match c.data_dir {
-        Some(ref data_dir) => String::from(data_dir),
-        None => String::from("data-dir"),
-    };
+    // let data_dir: String = match c.data_dir {
+    //     Some(ref data_dir) => String::from(data_dir),
+    //     None => String::from("data-dir"),
+    // };
 }
 
 /// Start p2p connections
@@ -51,7 +51,8 @@ fn start_p2p(c: Configuration) {
         },
     };
 
-    for seed in p2p_config.seeds {
+    let p2p: P2P = P2P::new(p2p_config);
+    for seed in p2p.config.seeds {
         P2P::dns_lookup(seed);
     }
 }

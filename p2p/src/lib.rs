@@ -4,10 +4,9 @@ extern crate futures;
 extern crate ns_dns_tokio;
 extern crate tokio_core;
 
-use tokio_core::reactor::{Core, Handle};
-
 use abstract_ns::{HostResolve, IpList};
 use ns_dns_tokio::DnsResolver;
+use tokio_core::reactor::{Core, Handle};
 
 mod config;
 mod consensus;
@@ -15,10 +14,14 @@ pub use config::{Config, NetConfig, IP};
 pub use consensus::{ConsensusParams, Deployment};
 
 pub struct P2P {
-    handle: Handle,
+    pub config: Config,
 }
 
 impl P2P {
+    pub fn new(p2p_config: Config) -> Self {
+        P2P { config: p2p_config }
+    }
+
     pub fn dns_lookup(seed: String) {
         let mut core: Core = Core::new().unwrap();
         let handle: Handle = core.handle();
