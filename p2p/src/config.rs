@@ -1,7 +1,7 @@
 use std::net::SocketAddr;
 use std::path::PathBuf;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Config {
     pub outbound_connections: u32,
     pub inbound_connections: u32,
@@ -14,7 +14,7 @@ pub struct Config {
     pub connection: NetConfig,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum IP {
     IPV4,
     IPV6,
@@ -23,7 +23,7 @@ pub enum IP {
 // #[derive(Debug)]
 // pub struct Services(u64);
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct NetConfig {
     pub protocol_version: u32,
     pub protocol_minimum: u32,

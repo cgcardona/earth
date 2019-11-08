@@ -2,6 +2,7 @@ use configuration::Configuration;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
 use std::{fs, path::PathBuf};
+use tokio_core::reactor::{Core, Handle};
 
 /// start EARTH client with command line arguments
 pub fn start(c: Configuration) {
@@ -25,6 +26,10 @@ fn start_db(c: &Configuration) {
 
 /// Start p2p connections
 fn start_p2p(c: Configuration) {
+    let mut core: Core = Core::new().unwrap();
+
+    let handle: Handle = core.handle();
+
     // create p2p directory
     let mut node_table_path: PathBuf = match c.data_dir {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
@@ -53,7 +58,7 @@ fn start_p2p(c: Configuration) {
         },
     };
 
-    let p2p: P2P = P2P::new(p2p_config);
+    let p2p: P2P = P2P::new(p2p_config, handle);
     for seed in p2p.config.seeds {
         dns_lookup(seed);
     }

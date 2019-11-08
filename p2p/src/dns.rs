@@ -21,6 +21,7 @@ pub fn dns_lookup(seed: String) {
     match res {
         Ok(addr) => match addr.pick_one() {
             Some(sock) => {
+                // println!("{:#?}", sock);
                 // TODO - Support mainnet with port 8333
                 connect_to_ip(SocketAddr::new(sock, 18333), handle);
             }
