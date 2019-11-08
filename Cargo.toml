@@ -27,6 +27,5 @@ tokio-core = "0.1.17"
 ns-dns-tokio = "0.4.0"
 abstract-ns = "0.4.3"
 futures = "0.3.1"
-argparse = "0.2.2"
 domain = "0.4.0"
 

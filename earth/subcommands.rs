@@ -61,8 +61,6 @@ fn start_db(c: &Configuration) {
 
 /// Start p2p connections
 fn start_p2p(c: Configuration) {
-    let mut el: Core = p2p::event_loop();
-
     // create p2p directory
     let node_table_path: PathBuf = match c.data_dir {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
@@ -97,7 +95,9 @@ fn start_p2p(c: Configuration) {
         },
     };
 
-    P2P::dns_lookup(p2p_config);
+    for seed in p2p_config.seeds {
+        P2P::dns_lookup(seed);
+    }
 }
 
 /// create data_dir if it doesn't exist
