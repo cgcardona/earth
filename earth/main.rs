@@ -4,14 +4,10 @@ extern crate database;
 extern crate mock_data;
 extern crate network;
 
-mod configuration;
-mod seeders;
-mod subcommands;
 mod test;
 
 use clap::ArgMatches;
-pub use configuration::{parse_input, Configuration};
-pub use seeders::{mainnet_seeders, testnet_seeders};
+use configuration::Configuration;
 use subcommands::{import, rollback, start};
 
 fn main() {

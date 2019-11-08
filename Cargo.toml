@@ -11,12 +11,14 @@ path = "earth/main.rs"
 name = "earth"
 
 [dependencies]
-clap = { features = ["yaml"] }
-network = { path = "network" }
-mock_data = { path = "mock_data" }
-database = { path = "database" }
 blockchain = { path = "blockchain" }
+clap = { features = ["yaml"] }
+configuration = { path = "configuration" }
+database = { path = "database" }
+mock_data = { path = "mock_data" }
+network = { path = "network" }
 p2p = { path = "p2p" }
+subcommands = { path = "subcommands" }
 # rocksdb = "0.12.4"
 serde = { version = "1.0.102", features = ["derive"] }
 serde_derive = "1.0.102"

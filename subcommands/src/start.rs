@@ -1,28 +1,7 @@
-use crate::Configuration;
-use blockchain::Block;
-use database::Storage;
-use mock_data::block_mock_data;
+use configuration::Configuration;
 use p2p::Config;
-use p2p::{NetConfig, P2P};
+use p2p::P2P;
 use std::{fs, path::PathBuf};
-use tokio_core::reactor::{Core, Handle};
-
-// use crate::seeders::{mainnet_seeders, testnet_seeders};
-// use blockchain::Block;
-// use database::*;
-// use mock_data::block_mock_data;
-
-/// imports blockchain data
-pub fn import(c: &Configuration, m: &clap::ArgMatches) {
-    let g: &str = c.network.genesis();
-    let i: &str = m.value_of("PATH").unwrap();
-    println!("IMPORT: {:#?}, {}, {}", m, g, i);
-}
-
-/// Rollback the database to block hash or number
-pub fn rollback(c: &Configuration, m: &clap::ArgMatches) {
-    println!("ROLLBACK: {:#?}, {:#?}", c, m);
-}
 
 /// start EARTH client with command line arguments
 pub fn start(c: Configuration) {
@@ -42,21 +21,6 @@ fn start_db(c: &Configuration) {
         Some(ref data_dir) => String::from(data_dir),
         None => String::from("data-dir"),
     };
-
-    // let s: Storage = Storage::new(data_dir);
-
-    // let b: Block = Block::new(None, None);
-
-    // for x in 0..32 {
-    //     let b: Block = mock_data::block_mock_data(x);
-    //     // println!("Block: {:#?}", b);
-    //     let key: &str = &format!("{}{}", "foo", x);
-    //     // println!("Key: {:#?}", key);
-    //     let serialized0 = serde_json::to_string(&b).unwrap();
-    //     assert!(s.write(key, serialized0).is_ok());
-    //     assert!(s.read(key).is_ok());
-    //     assert!(s.delete(key).is_ok());
-    // }
 }
 
 /// Start p2p connections
@@ -66,14 +30,6 @@ fn start_p2p(c: Configuration) {
         Some(ref data_dir) => create_p2p_dir(&data_dir, "p2p"),
         None => create_p2p_dir("data-dir", "p2p"),
     };
-
-    // let p2p_cfg = p2p::Config {
-    //     connection: p2p::NetConfig {
-    //         magic: cfg.consensus.magic(),
-    //         local_address: SocketAddr::new(cfg.host, cfg.port),
-    //         services: cfg.services,
-    //     },
-    // };
 
     let p2p_config: Config = Config {
         outbound_connections: c.outbound_connections,
