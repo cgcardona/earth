@@ -27,7 +27,7 @@ fn run() {
     let configuration: Result<Configuration, String> =
         configuration::parse_input(&command_line_matches);
 
-    println!("configuration: {:#?}", &configuration);
+    // println!("configuration: {:#?}", &configuration);
 
     let config: Configuration = configuration.unwrap();
 

@@ -1,4 +1,4 @@
-// TODO - Resolve these including IP address
+// TODO - Resolve these including port
 
 pub fn mainnet_seeders() -> Vec<String> {
     vec![
