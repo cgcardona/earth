@@ -43,7 +43,7 @@ fn start_db(c: &Configuration) {
         None => String::from("data-dir"),
     };
 
-    let s: Storage = Storage::new(data_dir);
+    // let s: Storage = Storage::new(data_dir);
 
     // let b: Block = Block::new(None, None);
 

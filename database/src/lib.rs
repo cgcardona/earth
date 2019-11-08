@@ -1,4 +1,4 @@
-extern crate rocksdb;
+// extern crate rocksdb;
 
 mod storage;
 
