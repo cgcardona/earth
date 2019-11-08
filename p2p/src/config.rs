@@ -5,7 +5,7 @@ use std::path::PathBuf;
 pub struct Config {
     pub outbound_connections: u32,
     pub inbound_connections: u32,
-    pub threads: u32,
+    pub threads: usize,
     pub node_table_path: PathBuf,
     pub seeds: Vec<String>,
     pub peers: Vec<SocketAddr>,

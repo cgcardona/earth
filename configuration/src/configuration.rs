@@ -26,7 +26,7 @@ pub struct Configuration {
     pub seeders: Vec<String>,
     pub inbound_connections: u32,
     pub outbound_connections: u32,
-    pub threads: u32,
+    pub threads: usize,
     pub connect: Option<net::SocketAddr>,
     pub internet_protocol: IP,
 }
@@ -54,7 +54,7 @@ pub fn parse_input(matches: &clap::ArgMatches) -> Result<Configuration, String> 
         network = Network::Regtest;
     }
 
-    let (inbound_connections, outbound_connections, threads): (u32, u32, u32) = match network {
+    let (inbound_connections, outbound_connections, threads): (u32, u32, usize) = match network {
         Network::Mainnet | Network::Testnet => (10, 10, 4),
         Network::Regtest => (1, 0, 1),
     };
