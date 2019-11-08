@@ -1,4 +1,3 @@
-extern crate clap;
 mod import;
 mod rollback;
 mod start;

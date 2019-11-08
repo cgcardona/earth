@@ -1,9 +1,3 @@
-// extern crate abstract_ns;
-// extern crate domain;
-// extern crate futures;
-// extern crate ns_dns_tokio;
-// extern crate tokio_core;
-
 use futures_cpupool::{Builder, CpuPool};
 use std::sync::Arc;
 use tokio_core::reactor::Handle;

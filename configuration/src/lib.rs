@@ -1,6 +1,3 @@
-extern crate clap;
-extern crate network;
-
 mod configuration;
 mod seeders;
 
