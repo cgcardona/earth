@@ -12,7 +12,8 @@ use subcommands::{import, rollback, start};
 
 /// main function
 fn main() {
-    ::std::env::set_var("RUST_BACKTRACE", "1");
+    better_panic::install();
+
     run();
 }
 
