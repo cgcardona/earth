@@ -10,11 +10,13 @@ use clap::ArgMatches;
 use configuration::Configuration;
 use subcommands::{import, rollback, start};
 
+/// main function
 fn main() {
     ::std::env::set_var("RUST_BACKTRACE", "1");
     run();
 }
 
+/// runner
 fn run() {
     let command_line_options = load_yaml!("command_line_options.yml");
     let command_line_matches: ArgMatches = clap::App::from_yaml(command_line_options).get_matches();

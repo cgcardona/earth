@@ -1,6 +1,6 @@
 use configuration::Configuration;
 use p2p::Config;
-use p2p::P2P;
+use p2p::{dns_lookup, P2P};
 use std::{fs, path::PathBuf};
 
 /// start EARTH client with command line arguments
@@ -53,7 +53,7 @@ fn start_p2p(c: Configuration) {
 
     let p2p: P2P = P2P::new(p2p_config);
     for seed in p2p.config.seeds {
-        P2P::dns_lookup(seed);
+        dns_lookup(seed);
     }
 }
 
