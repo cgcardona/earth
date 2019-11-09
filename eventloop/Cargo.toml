@@ -1,5 +1,5 @@
 [package]
-name = "event_loop"
+name = "eventloop"
 version = "0.1.0"
 authors = ["Gabriel Cardona <cgcardona@gmail.com>"]
 edition = "2018"

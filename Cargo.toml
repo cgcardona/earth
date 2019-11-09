@@ -19,7 +19,7 @@ network = { path = "network" }
 p2p = { path = "p2p" }
 subcommands = { path = "subcommands" }
 services = { path = "services" }
-event_loop = { path = "event_loop" }
+eventloop = { path = "eventloop" }
 database = { path = "database" }
 # rocksdb = "0.12.4"
 serde = { version = "1.0.102", features = ["derive"] }

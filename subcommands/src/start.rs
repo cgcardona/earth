@@ -1,7 +1,7 @@
 use crate::{Util, MIN, VERSION};
 use configuration::Configuration;
 use database::DataBase;
-use event_loop::EventLoop;
+use eventloop::EventLoop;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
 use p2p::{LocalSyncNode, LocalSyncNodeRef};
@@ -11,7 +11,7 @@ use tokio_core::reactor::{Core, Handle};
 
 /// start EARTH client with command line arguments
 pub fn start(config: Configuration) -> Result<(), String> {
-    let event_loop: EventLoop = EventLoop::new();
+    let eventloop: EventLoop = EventLoop::new();
 
     // Util::initialize_database(&config);
 

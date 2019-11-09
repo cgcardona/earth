@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 configuration = { path = "../configuration" }
-event_loop = { path = "../event_loop" }
+eventloop = { path = "../eventloop" }
 database = { path = "../database" }
 p2p = { path = "../p2p" }
 clap = { features = ["yaml"] }
