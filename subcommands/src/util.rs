@@ -5,6 +5,9 @@ use p2p::{LocalSyncNode, LocalSyncNodeRef};
 use std::{fs, path::PathBuf};
 use tokio_core::reactor::{Core, Handle};
 
+pub const VERSION: u32 = 70_014;
+pub const MIN: u32 = 70_001;
+
 pub struct Util {}
 
 impl Util {

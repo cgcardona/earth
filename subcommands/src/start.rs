@@ -1,4 +1,4 @@
-use crate::Util;
+use crate::{Util, MIN, VERSION};
 use configuration::Configuration;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
@@ -19,18 +19,19 @@ pub fn start(config: Configuration) -> Result<(), String> {
         inbound_connections: config.inbound_connections,
         threads: config.threads,
         node_table_path: node_table_path,
-        seeds: config.seeders.clone(),
+        seeds: config.seeders,
         peers: config.connect.map_or_else(|| vec![], |x| vec![x]),
         ip: config.ip,
+        // preferable_services: cfg.services,
         connection: p2p::NetConfig {
-            protocol_version: 70_014,
-            protocol_minimum: 70_001,
-            // magic: cfg.consensus.magic(),
-            // local_address: SocketAddr::new(c.host, c.port),
-            // services: c.services,
+            protocol_version: VERSION,
+            protocol_minimum: MIN,
             user_agent: config.user_agent,
             start_height: 0,
             relay: true,
+            // magic: cfg.consensus.magic(),
+            // local_address: SocketAddr::new(c.host, c.port),
+            // services: c.services,
         },
     };
 
