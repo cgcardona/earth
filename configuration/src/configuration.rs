@@ -28,7 +28,7 @@ pub struct Configuration {
     pub outbound_connections: u32,
     pub threads: usize,
     pub connect: Option<net::SocketAddr>,
-    pub internet_protocol: IP,
+    pub ip: IP,
 }
 
 impl Configuration {
@@ -116,7 +116,7 @@ impl Configuration {
             threads: threads,
             outbound_connections: outbound_connections,
             connect: connect,
-            internet_protocol: only_net,
+            ip: only_net,
         })
     }
 }

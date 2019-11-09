@@ -9,7 +9,7 @@ pub struct Config {
     pub node_table_path: PathBuf,
     pub seeds: Vec<String>,
     pub peers: Vec<SocketAddr>,
-    pub internet_protocol: IP,
+    pub ip: IP,
     // pub preferable_services: Services,
     pub connection: NetConfig,
 }

@@ -10,11 +10,7 @@ use subcommands::{import, rollback, start};
 /// main function
 fn main() {
     better_panic::install();
-    run();
-}
 
-/// runner
-fn run() {
     // get command line options from yaml
     let cli_options = load_yaml!("command_line_options.yml");
 

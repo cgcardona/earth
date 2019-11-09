@@ -46,7 +46,7 @@ fn start_p2p(c: Configuration) {
         node_table_path: node_table_path,
         seeds: c.seeders.clone(),
         peers: c.connect.map_or_else(|| vec![], |x| vec![x]),
-        internet_protocol: c.internet_protocol,
+        ip: c.ip,
         connection: p2p::NetConfig {
             protocol_version: 70_014,
             protocol_minimum: 70_001,
