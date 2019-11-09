@@ -1,3 +1,4 @@
+use services::Services;
 use std::net::SocketAddr;
 use std::path::PathBuf;
 
@@ -10,7 +11,7 @@ pub struct Config {
     pub seeds: Vec<String>,
     pub peers: Vec<SocketAddr>,
     pub ip: IP,
-    // pub preferable_services: Services,
+    pub services: Services,
     pub connection: NetConfig,
 }
 
@@ -29,7 +30,7 @@ pub struct NetConfig {
     pub protocol_minimum: u32,
     // pub magic: Magic,
     // pub local_address: SocketAddr,
-    // pub services: Services,
+    pub services: Services,
     pub user_agent: String,
     pub start_height: i32,
     pub relay: bool,

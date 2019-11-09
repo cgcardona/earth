@@ -22,7 +22,7 @@ pub fn start(config: Configuration) -> Result<(), String> {
         seeds: config.seeders,
         peers: config.connect.map_or_else(|| vec![], |x| vec![x]),
         ip: config.ip,
-        // preferable_services: cfg.services,
+        services: config.services.clone(),
         connection: p2p::NetConfig {
             protocol_version: VERSION,
             protocol_minimum: MIN,
@@ -31,7 +31,7 @@ pub fn start(config: Configuration) -> Result<(), String> {
             relay: true,
             // magic: cfg.consensus.magic(),
             // local_address: SocketAddr::new(c.host, c.port),
-            // services: c.services,
+            services: config.services,
         },
     };
 

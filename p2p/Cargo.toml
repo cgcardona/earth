@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 network = { path = "../network" }
+services = { path = "../services" }
 tokio-core = "0.1.17"
 ns-dns-tokio = "0.4.0"
 abstract-ns = "0.4.3"
