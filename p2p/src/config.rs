@@ -21,17 +21,14 @@ pub enum IP {
     IPV6,
 }
 
-// #[derive(Debug)]
-// pub struct Services(u64);
-
 #[derive(Debug, Clone)]
 pub struct NetConfig {
     pub protocol_version: u32,
     pub protocol_minimum: u32,
     // pub magic: Magic,
-    // pub local_address: SocketAddr,
+    pub local_address: SocketAddr,
     pub services: Services,
-    pub user_agent: String,
+    pub ua: String,
     pub start_height: i32,
     pub relay: bool,
 }

@@ -3,6 +3,7 @@ use configuration::Configuration;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
 use p2p::{LocalSyncNode, LocalSyncNodeRef};
+use std::net::SocketAddr;
 use std::{fs, path::PathBuf};
 use tokio_core::reactor::{Core, Handle};
 
@@ -26,11 +27,11 @@ pub fn start(config: Configuration) -> Result<(), String> {
         connection: p2p::NetConfig {
             protocol_version: VERSION,
             protocol_minimum: MIN,
-            user_agent: config.user_agent,
+            ua: config.ua,
             start_height: 0,
             relay: true,
             // magic: cfg.consensus.magic(),
-            // local_address: SocketAddr::new(c.host, c.port),
+            local_address: SocketAddr::new(config.host, config.port),
             services: config.services,
         },
     };

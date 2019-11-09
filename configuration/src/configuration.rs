@@ -5,7 +5,7 @@ use network::Network;
 use p2p::{ConsensusParams, IP};
 use services::Services;
 use std::net;
-use std::net::SocketAddr;
+use std::net::{IpAddr, SocketAddr};
 // use std::collections::hash_map::DefaultHasher;
 // use std::hash::{Hash, Hasher};
 
@@ -23,9 +23,10 @@ pub struct Configuration {
     pub consensus: ConsensusParams,
     pub port: u16,
     pub db_cache: usize,
-    pub user_agent: String,
+    pub ua: String,
     pub quiet: bool,
     pub seeders: Vec<String>,
+    pub host: IpAddr,
     pub inbound_connections: u32,
     pub outbound_connections: u32,
     pub threads: usize,
@@ -75,7 +76,7 @@ impl Configuration {
             None => 512,
         };
 
-        let user_agent: String = String::from("/EARTH:0.0.1/");
+        let ua: String = String::from("/EARTH:0.0.1/");
 
         let quiet: bool = matches.is_present("quiet");
 
@@ -107,11 +108,21 @@ impl Configuration {
 
         let services: Services = Services::default().with_network(true);
 
+        let host: IpAddr = match matches.value_of("host") {
+            Some(s) => s
+                .parse::<net::IpAddr>()
+                .map_err(|_| "Invalid host".to_owned())?,
+            None => match only_net {
+                IP::IPV6 => "::".parse().unwrap(),
+                _ => "0.0.0.0".parse().unwrap(),
+            },
+        };
+
         Ok(Configuration {
             network: network,
             port: port,
             db_cache: db_cache,
-            user_agent: user_agent,
+            ua: ua,
             quiet: quiet,
             consensus: consensus,
             data_dir: data_dir,
@@ -122,6 +133,7 @@ impl Configuration {
             connect: connect,
             ip: only_net,
             services: services,
+            host: host,
         })
     }
 }
