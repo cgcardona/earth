@@ -15,22 +15,6 @@ impl Util {
         Util {}
     }
 
-    /// Start database setup
-    pub fn start_db(c: &Configuration) {
-        // create db directory
-        match c.data_dir {
-            Some(ref data_dir) => Util::create_data_dir(&data_dir, "db"),
-            None => Util::create_data_dir("data-dir", "db"),
-        };
-
-        // let data_dir: String = match c.data_dir {
-        //     Some(ref data_dir) => String::from(data_dir),
-        //     None => String::from("data-dir"),
-        // };
-    }
-
-    pub fn initialize_database(c: &Configuration) {}
-
     pub fn node_table_path(config: &Configuration) -> PathBuf {
         // create p2p directory
         let mut node_table_path: PathBuf = match config.data_dir {

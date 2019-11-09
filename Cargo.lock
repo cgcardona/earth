@@ -368,6 +368,9 @@ dependencies = [
 [[package]]
 name = "database"
 version = "0.1.0"
+dependencies = [
+ "configuration 0.1.0",
+]
 
 [[package]]
 name = "domain"
@@ -430,6 +433,7 @@ dependencies = [
  "criterion 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "database 0.1.0",
  "domain 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "event_loop 0.1.0",
  "futures 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures-cpupool 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "mock_data 0.1.0",
@@ -471,6 +475,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "backtrace 0.3.40 (registry+https://github.com/rust-lang/crates.io-index)",
  "version_check 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "event_loop"
+version = "0.1.0"
+dependencies = [
+ "tokio-core 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1546,6 +1557,8 @@ version = "0.1.0"
 dependencies = [
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "configuration 0.1.0",
+ "database 0.1.0",
+ "event_loop 0.1.0",
  "p2p 0.1.0",
  "tokio-core 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

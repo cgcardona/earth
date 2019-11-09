@@ -1,5 +1,7 @@
 use crate::{Util, MIN, VERSION};
 use configuration::Configuration;
+use database::DataBase;
+use event_loop::EventLoop;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
 use p2p::{LocalSyncNode, LocalSyncNodeRef};
@@ -9,9 +11,9 @@ use tokio_core::reactor::{Core, Handle};
 
 /// start EARTH client with command line arguments
 pub fn start(config: Configuration) -> Result<(), String> {
-    let mut event_loop: Core = Core::new().unwrap();
+    let event_loop: EventLoop = EventLoop::new();
 
-    Util::initialize_database(&config);
+    // Util::initialize_database(&config);
 
     let node_table_path: PathBuf = Util::node_table_path(&config);
 
@@ -36,16 +38,18 @@ pub fn start(config: Configuration) -> Result<(), String> {
         },
     };
 
+    // let sync_peers = create_sync_peers();
+
     // let sync_connection_factory =
     //     create_sync_connect.handle()ion_factory(sync_peers.clone(), local_sync_node.clone());
-    struct Foo {}
-    impl LocalSyncNode for Foo {
-        fn create_sync_session(&self) {}
-    }
+    // struct Foo {}
+    // impl LocalSyncNode for Foo {
+    //     fn create_sync_session(&self) {}
+    // }
 
-    let localSyncNode: Foo = Foo {};
+    // let localSyncNode: Foo = Foo {};
 
-    let sync_connection_factory: LocalSyncNodeRef = Box::new(localSyncNode);
+    // let sync_connection_factory: LocalSyncNodeRef = Box::new(localSyncNode);
 
     // let p2p: P2P = P2P::new(config, sync_connection_factory, handle).unwrap();
     // for seed in p2p.config.seeds {
