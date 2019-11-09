@@ -39,7 +39,7 @@ fn start_p2p(c: Configuration) {
 
     node_table_path.push("nodes.csv");
 
-    let p2p_config: Config = Config {
+    let config: Config = Config {
         outbound_connections: c.outbound_connections,
         inbound_connections: c.inbound_connections,
         threads: c.threads,
@@ -70,7 +70,7 @@ fn start_p2p(c: Configuration) {
 
     let sync_connection_factory: LocalSyncNodeRef = Box::new(localSyncNode);
 
-    let p2p: P2P = P2P::new(p2p_config, sync_connection_factory, handle).unwrap();
+    let p2p: P2P = P2P::new(config, sync_connection_factory, handle).unwrap();
     for seed in p2p.config.seeds {
         dns_lookup(seed);
     }

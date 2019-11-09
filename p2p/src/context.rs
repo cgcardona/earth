@@ -7,6 +7,7 @@ use tokio_core::reactor::Remote;
 // use parking_lot::RwLock;
 
 /// Network context.
+#[derive(Debug)]
 pub struct Context {
     pool: CpuPool,
     remote: Remote,

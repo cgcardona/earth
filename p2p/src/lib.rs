@@ -20,7 +20,9 @@ pub use local_sync_node::{LocalSyncNode, LocalSyncNodeRef};
 #[derive(Debug)]
 pub struct P2P {
     pub config: Config,
-    // pub context: Arc<Context>,
+    pub handle: Handle,
+    pub pool: CpuPool,
+    pub context: Arc<Context>,
 }
 
 impl P2P {
@@ -44,7 +46,9 @@ impl P2P {
 
         Ok(P2P {
             config: config,
-            // context: Arc::new(context),
+            handle: handle,
+            pool: pool,
+            context: Arc::new(context),
         })
     }
 }
