@@ -19,6 +19,7 @@ mock_data = { path = "mock_data" }
 network = { path = "network" }
 p2p = { path = "p2p" }
 subcommands = { path = "subcommands" }
+services = { path = "services" }
 # rocksdb = "0.12.4"
 serde = { version = "1.0.102", features = ["derive"] }
 serde_derive = "1.0.102"

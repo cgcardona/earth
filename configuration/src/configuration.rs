@@ -3,6 +3,7 @@ use clap;
 use core::option::Option;
 use network::Network;
 use p2p::{ConsensusParams, IP};
+use services::Services;
 use std::net;
 use std::net::SocketAddr;
 // use std::collections::hash_map::DefaultHasher;
@@ -17,6 +18,7 @@ use std::net::SocketAddr;
 #[derive(Debug)]
 pub struct Configuration {
     pub network: Network,
+    pub services: Services,
     pub data_dir: Option<String>,
     pub consensus: ConsensusParams,
     pub port: u16,
@@ -103,6 +105,8 @@ impl Configuration {
 
         let consensus: ConsensusParams = ConsensusParams::return_params(network);
 
+        let services: Services = Services::default().with_network(true);
+
         Ok(Configuration {
             network: network,
             port: port,
@@ -117,6 +121,7 @@ impl Configuration {
             outbound_connections: outbound_connections,
             connect: connect,
             ip: only_net,
+            services: services,
         })
     }
 }
