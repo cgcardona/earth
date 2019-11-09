@@ -5,7 +5,22 @@ pub enum Network {
     Regtest,
 }
 
+const MAGIC_MAINNET: u32 = 0xE8F3E1E3;
+const MAGIC_TESTNET: u32 = 0xF4F3E5F4;
+const MAGIC_REGTEST: u32 = 0xFABFB5DA;
+
+/// Network magic type.
+pub type Magic = u32;
+
 impl Network {
+    pub fn magic(&self) -> Magic {
+        match *self {
+            Network::Mainnet => MAGIC_MAINNET,
+            Network::Testnet => MAGIC_TESTNET,
+            Network::Regtest => MAGIC_REGTEST,
+        }
+    }
+
     pub fn port(&self) -> u16 {
         match *self {
             Network::Mainnet => 8332,

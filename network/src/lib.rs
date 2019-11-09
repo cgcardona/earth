@@ -1,3 +1,3 @@
-#[macro_use]
 mod network;
+pub use network::Magic;
 pub use network::Network;

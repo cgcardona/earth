@@ -30,7 +30,7 @@ pub fn start(config: Configuration) -> Result<(), String> {
             ua: config.ua,
             start_height: 0,
             relay: true,
-            // magic: cfg.consensus.magic(),
+            magic: config.consensus.magic(),
             local_address: SocketAddr::new(config.host, config.port),
             services: config.services,
         },

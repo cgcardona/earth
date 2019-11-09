@@ -1,3 +1,4 @@
+use network::Magic;
 use services::Services;
 use std::net::SocketAddr;
 use std::path::PathBuf;
@@ -25,7 +26,7 @@ pub enum IP {
 pub struct NetConfig {
     pub protocol_version: u32,
     pub protocol_minimum: u32,
-    // pub magic: Magic,
+    pub magic: Magic,
     pub local_address: SocketAddr,
     pub services: Services,
     pub ua: String,

@@ -1,4 +1,6 @@
+use network::Magic;
 use network::Network;
+
 #[derive(Debug, Clone)]
 pub struct ConsensusParams {
     pub network: Network,
@@ -12,6 +14,10 @@ pub struct ConsensusParams {
 }
 
 impl ConsensusParams {
+    pub fn magic(&self) -> Magic {
+        self.network.magic()
+    }
+
     pub fn return_params(network: Network) -> Self {
         match network {
             Network::Mainnet => ConsensusParams {
