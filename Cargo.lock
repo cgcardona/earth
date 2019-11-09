@@ -447,6 +447,7 @@ dependencies = [
  "serde_json 1.0.41 (registry+https://github.com/rust-lang/crates.io-index)",
  "services 0.1.0",
  "subcommands 0.1.0",
+ "synchronization 0.1.0",
  "tokio-core 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -1561,6 +1562,7 @@ dependencies = [
  "eventloop 0.1.0",
  "p2p 0.1.0",
  "services 0.1.0",
+ "synchronization 0.1.0",
  "tokio-core 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -1573,6 +1575,10 @@ dependencies = [
  "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-xid 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "synchronization"
+version = "0.1.0"
 
 [[package]]
 name = "synstructure"

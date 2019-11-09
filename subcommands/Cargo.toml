@@ -11,6 +11,7 @@ configuration = { path = "../configuration" }
 eventloop = { path = "../eventloop" }
 database = { path = "../database" }
 services = { path = "../services" }
+synchronization = { path = "../synchronization" }
 p2p = { path = "../p2p" }
 clap = { features = ["yaml"] }
 tokio-core = "0.1.17"

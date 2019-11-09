@@ -8,7 +8,8 @@ use p2p::{IP, P2P};
 use services::Services;
 use std::net::SocketAddr;
 use std::path::PathBuf;
-// use in
+use std::sync::Arc;
+use synchronization::Synchronization;
 
 /// start EARTH client with command line arguments
 pub fn start(config: Configuration) -> Result<(), String> {
@@ -60,7 +61,7 @@ pub fn start(config: Configuration) -> Result<(), String> {
         connection,
     );
 
-    // let sync_peers = create_sync_peers();
+    let sync_peers: Arc<u8> = Synchronization::create_peers().unwrap();
 
     // let sync_connection_factory =
     //     create_sync_connect.handle()ion_factory(sync_peers.clone(), local_sync_node.clone());
