@@ -5,15 +5,41 @@ use std::path::PathBuf;
 
 #[derive(Debug, Clone)]
 pub struct Config {
-    pub outbound_connections: u32,
-    pub inbound_connections: u32,
+    outbound_connections: u32,
+    inbound_connections: u32,
     pub threads: usize,
-    pub node_table_path: PathBuf,
-    pub seeds: Vec<String>,
-    pub peers: Vec<SocketAddr>,
-    pub ip: IP,
-    pub services: Services,
-    pub connection: NetConfig,
+    node_table_path: PathBuf,
+    seeds: Vec<String>,
+    peers: Vec<SocketAddr>,
+    ip: IP,
+    services: Services,
+    connection: NetConfig,
+}
+
+impl Config {
+    pub fn new(
+        outbound_connections: u32,
+        inbound_connections: u32,
+        threads: usize,
+        node_table_path: PathBuf,
+        seeds: Vec<String>,
+        peers: Vec<SocketAddr>,
+        ip: IP,
+        services: Services,
+        connection: NetConfig,
+    ) -> Self {
+        Config {
+            outbound_connections: outbound_connections,
+            inbound_connections: inbound_connections,
+            threads: threads,
+            node_table_path: node_table_path,
+            seeds: seeds,
+            peers: peers,
+            ip: ip,
+            services: services,
+            connection: connection,
+        }
+    }
 }
 
 #[derive(Debug, Clone)]

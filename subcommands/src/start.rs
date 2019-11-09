@@ -3,40 +3,64 @@ use configuration::Configuration;
 use database::DataBase;
 use eventloop::EventLoop;
 use p2p::Config;
-use p2p::{dns_lookup, P2P};
+use p2p::NetConfig;
+use p2p::{dns_lookup, IP, P2P};
 use p2p::{LocalSyncNode, LocalSyncNodeRef};
+use services::Services;
 use std::net::SocketAddr;
 use std::{fs, path::PathBuf};
 use tokio_core::reactor::{Core, Handle};
+// use in
 
 /// start EARTH client with command line arguments
 pub fn start(config: Configuration) -> Result<(), String> {
     let eventloop: EventLoop = EventLoop::new();
 
-    // Util::initialize_database(&config);
+    DataBase::init(&config);
 
-    let node_table_path: PathBuf = Util::node_table_path(&config);
-
-    let c: Config = Config {
-        outbound_connections: config.outbound_connections,
-        inbound_connections: config.inbound_connections,
-        threads: config.threads,
-        node_table_path: node_table_path,
-        seeds: config.seeders,
-        peers: config.connect.map_or_else(|| vec![], |x| vec![x]),
-        ip: config.ip,
-        services: config.services.clone(),
-        connection: p2p::NetConfig {
-            protocol_version: VERSION,
-            protocol_minimum: MIN,
-            ua: config.ua,
-            start_height: 0,
-            relay: true,
-            magic: config.consensus.magic(),
-            local_address: SocketAddr::new(config.host, config.port),
-            services: config.services,
-        },
+    let node_table_path: PathBuf = match config.data_dir {
+        Some(ref data_dir) => P2P::create_p2p_dir(&data_dir, "p2p"),
+        None => P2P::create_p2p_dir("data-dir", "p2p"),
     };
+
+    let outbound_connections: u32 = config.outbound_connections;
+    let inbound_connections: u32 = config.inbound_connections;
+    let threads: usize = config.threads;
+    let node_table_path: PathBuf = node_table_path;
+    let seeds: Vec<String> = config.seeders;
+    let peers: Vec<SocketAddr> = config.connect.map_or_else(|| vec![], |x| vec![x]);
+    let ip: IP = config.ip;
+    let protocol_version: u32 = VERSION;
+    let protocol_minimum: u32 = MIN;
+    let ua: String = config.ua;
+    let start_height: i32 = 0;
+    let relay: bool = true;
+    let magic: u32 = config.consensus.magic();
+    let local_address: SocketAddr = SocketAddr::new(config.host, config.port);
+    let services: Services = config.services;
+
+    let connection: NetConfig = NetConfig {
+        protocol_version: protocol_version,
+        protocol_minimum: protocol_minimum,
+        ua: ua,
+        start_height: start_height,
+        relay: relay,
+        magic: magic,
+        local_address: local_address,
+        services: services.clone(),
+    };
+
+    let c: Config = Config::new(
+        outbound_connections,
+        inbound_connections,
+        threads,
+        node_table_path,
+        seeds,
+        peers,
+        ip,
+        services,
+        connection,
+    );
 
     // let sync_peers = create_sync_peers();
 

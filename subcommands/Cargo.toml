@@ -10,6 +10,7 @@ edition = "2018"
 configuration = { path = "../configuration" }
 eventloop = { path = "../eventloop" }
 database = { path = "../database" }
+services = { path = "../services" }
 p2p = { path = "../p2p" }
 clap = { features = ["yaml"] }
 tokio-core = "0.1.17"

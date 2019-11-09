@@ -1560,6 +1560,7 @@ dependencies = [
  "database 0.1.0",
  "eventloop 0.1.0",
  "p2p 0.1.0",
+ "services 0.1.0",
  "tokio-core 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
