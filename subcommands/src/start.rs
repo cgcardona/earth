@@ -1,15 +1,13 @@
-use crate::{Util, MIN, VERSION};
+use crate::{MIN, VERSION};
 use configuration::Configuration;
 use database::DataBase;
 use eventloop::EventLoop;
 use p2p::Config;
 use p2p::NetConfig;
-use p2p::{dns_lookup, IP, P2P};
-use p2p::{LocalSyncNode, LocalSyncNodeRef};
+use p2p::{IP, P2P};
 use services::Services;
 use std::net::SocketAddr;
-use std::{fs, path::PathBuf};
-use tokio_core::reactor::{Core, Handle};
+use std::path::PathBuf;
 // use in
 
 /// start EARTH client with command line arguments
