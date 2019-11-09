@@ -1,8 +1,6 @@
 #[macro_use]
 extern crate clap;
 
-mod test;
-
 use clap::ArgMatches;
 use configuration::Configuration;
 use subcommands::{import, rollback, start};
