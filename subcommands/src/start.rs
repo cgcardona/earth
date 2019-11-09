@@ -1,6 +1,7 @@
 use configuration::Configuration;
 use p2p::Config;
 use p2p::{dns_lookup, P2P};
+use p2p::{LocalSyncNode, LocalSyncNodeRef};
 use std::{fs, path::PathBuf};
 use tokio_core::reactor::{Core, Handle};
 
@@ -58,7 +59,18 @@ fn start_p2p(c: Configuration) {
         },
     };
 
-    let p2p: P2P = P2P::new(p2p_config, handle);
+    // let sync_connection_factory =
+    //     create_sync_connect.handle()ion_factory(sync_peers.clone(), local_sync_node.clone());
+    struct Foo {}
+    impl LocalSyncNode for Foo {
+        fn create_sync_session(&self) {}
+    }
+
+    let localSyncNode: Foo = Foo {};
+
+    let sync_connection_factory: LocalSyncNodeRef = Box::new(localSyncNode);
+
+    let p2p: P2P = P2P::new(p2p_config, sync_connection_factory, handle).unwrap();
     for seed in p2p.config.seeds {
         dns_lookup(seed);
     }

@@ -1,12 +1,15 @@
+use crate::local_sync_node::LocalSyncNodeRef;
 use crate::Config;
 use futures_cpupool::CpuPool;
-use parking_lot::RwLock;
+use std::error;
 use std::net::SocketAddr;
-use tokio_core::reactor::Handle;
+use tokio_core::reactor::Remote;
+// use parking_lot::RwLock;
 
 /// Network context.
 pub struct Context {
     pool: CpuPool,
+    remote: Remote,
     // node_table: RwLock<NodeTable>,
     config: Config,
 }
@@ -14,13 +17,18 @@ pub struct Context {
 pub struct NodeTable {}
 
 impl Context {
-    // pub fn new(pool: CpuPool, handle: Handle, node_table: RwLock<NodeTable>, config: Config) -> Self {
-    pub fn new(pool: CpuPool, handle: Handle, config: Config) -> Self {
-        Context {
+    pub fn new(
+        local_sync_node: LocalSyncNodeRef,
+        pool: CpuPool,
+        remote: Remote,
+        config: Config,
+    ) -> Result<Self, Box<dyn error::Error>> {
+        Ok(Context {
             pool: pool,
             // node_table: node_table,
+            remote: remote,
             config: config,
-        }
+        })
     }
 
     /// Add a node to the noe_table
