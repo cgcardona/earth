@@ -12,7 +12,7 @@ mod context;
 mod dns;
 mod local_sync_node;
 
-pub use config::{Config, NetConfig, IP};
+pub use config::{Config, NetworkConfig, IP};
 pub use consensus::{ConsensusParams, Deployment};
 pub use context::{Context, NodeTable};
 pub use dns::dns_lookup;

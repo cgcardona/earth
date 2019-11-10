@@ -1579,6 +1579,9 @@ dependencies = [
 [[package]]
 name = "synchronization"
 version = "0.1.0"
+dependencies = [
+ "p2p 0.1.0",
+]
 
 [[package]]
 name = "synstructure"

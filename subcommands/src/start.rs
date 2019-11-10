@@ -3,7 +3,7 @@ use configuration::Configuration;
 use database::DataBase;
 use eventloop::EventLoop;
 use p2p::Config;
-use p2p::NetConfig;
+use p2p::NetworkConfig;
 use p2p::{IP, P2P};
 use services::Services;
 use std::net::SocketAddr;
@@ -38,7 +38,7 @@ pub fn start(config: Configuration) -> Result<(), String> {
     let local_address: SocketAddr = SocketAddr::new(config.host, config.port);
     let services: Services = config.services;
 
-    let connection: NetConfig = NetConfig {
+    let connection: NetworkConfig = NetworkConfig {
         protocol_version: protocol_version,
         protocol_minimum: protocol_minimum,
         ua: ua,
@@ -62,6 +62,14 @@ pub fn start(config: Configuration) -> Result<(), String> {
     );
 
     let sync_peers: Arc<u8> = Synchronization::create_peers().unwrap();
+
+    let local_sync_node: () = Synchronization::create_sync_node(
+        config.consensus,
+        // config.db.clone(),
+        // sync_peers.clone(),
+        // cfg.verification_params,
+    )
+    .unwrap();
 
     // let sync_connection_factory =
     //     create_sync_connect.handle()ion_factory(sync_peers.clone(), local_sync_node.clone());

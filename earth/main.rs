@@ -21,10 +21,12 @@ fn main() {
     // detect subcommand
     match cli_matches.subcommand() {
         ("import", Some(matches)) => {
-            import(&config, matches);
+            // `import` subcommand
+            import(config, matches);
         }
         ("rollback", Some(matches)) => {
-            rollback(&config, matches);
+            // `rollback` subcommand
+            rollback(config, matches);
         }
         _ => {
             // run `start` subcommand by default

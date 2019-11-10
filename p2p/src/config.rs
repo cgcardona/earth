@@ -13,7 +13,7 @@ pub struct Config {
     peers: Vec<SocketAddr>,
     ip: IP,
     services: Services,
-    connection: NetConfig,
+    connection: NetworkConfig,
 }
 
 impl Config {
@@ -26,7 +26,7 @@ impl Config {
         peers: Vec<SocketAddr>,
         ip: IP,
         services: Services,
-        connection: NetConfig,
+        connection: NetworkConfig,
     ) -> Self {
         Config {
             outbound_connections: outbound_connections,
@@ -49,7 +49,7 @@ pub enum IP {
 }
 
 #[derive(Debug, Clone)]
-pub struct NetConfig {
+pub struct NetworkConfig {
     pub protocol_version: u32,
     pub protocol_minimum: u32,
     pub magic: Magic,
