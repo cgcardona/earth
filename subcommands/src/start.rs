@@ -18,8 +18,14 @@ pub fn start(config: Configuration) -> Result<(), String> {
     DataBase::init(&config);
 
     let node_table_path: PathBuf = match config.data_dir {
-        Some(ref data_dir) => P2P::create_p2p_dir(&data_dir, "p2p"),
-        None => P2P::create_p2p_dir("data-dir", "p2p"),
+        Some(ref data_dir) => {
+            P2P::create_p2p_dir(&data_dir, "p2p");
+            DataBase::create_data_dir(&data_dir, "db")
+        }
+        None => {
+            P2P::create_p2p_dir("data-dir", "p2p");
+            DataBase::create_data_dir("data-dir", "db")
+        }
     };
 
     let outbound_connections: u32 = config.outbound_connections;
@@ -65,9 +71,9 @@ pub fn start(config: Configuration) -> Result<(), String> {
 
     let local_sync_node: () = Synchronization::create_sync_node(
         config.consensus,
-        // config.db.clone(),
-        // sync_peers.clone(),
-        // cfg.verification_params,
+        config.db.clone(),
+        sync_peers.clone(),
+        config.verification_params,
     )
     .unwrap();
 

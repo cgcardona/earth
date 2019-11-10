@@ -23,6 +23,14 @@ impl Network {
 
     pub fn port(&self) -> u16 {
         match *self {
+            Network::Mainnet => 8333,
+            Network::Testnet => 18333,
+            Network::Regtest => 18444,
+        }
+    }
+
+    pub fn rpc_port(&self) -> u16 {
+        match *self {
             Network::Mainnet => 8332,
             Network::Testnet => 18332,
             Network::Regtest => 18443,

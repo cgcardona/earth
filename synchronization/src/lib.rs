@@ -12,9 +12,9 @@ impl Synchronization {
 
     pub fn create_sync_node(
         consensus: ConsensusParams,
-        // db: storage::SharedStore,
-        // peers: PeersRef,
-        // verification_params: VerificationParameters,
+        db: (),
+        peers: Arc<u8>,
+        verification_params: (),
         // ) -> LocalNodeRef {
     ) -> Result<(), ()> {
         Ok(())

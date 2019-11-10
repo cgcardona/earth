@@ -3,9 +3,12 @@ use clap;
 use core::option::Option;
 use network::Network;
 use p2p::{ConsensusParams, IP};
+use rpc::{HttpConfig, RPC};
 use services::Services;
-use std::net;
-use std::net::{IpAddr, SocketAddr};
+use std::{
+    net,
+    net::{IpAddr, SocketAddr},
+};
 // use std::collections::hash_map::DefaultHasher;
 // use std::hash::{Hash, Hasher};
 
@@ -32,6 +35,10 @@ pub struct Configuration {
     pub threads: usize,
     pub connect: Option<net::SocketAddr>,
     pub ip: IP,
+    pub rpc_config: HttpConfig,
+    pub block_notify_command: Option<String>,
+    pub verification_params: (),
+    pub db: (),
 }
 
 impl Configuration {
@@ -58,35 +65,41 @@ impl Configuration {
             network = Network::Regtest;
         }
 
-        let (inbound_connections, outbound_connections, threads): (u32, u32, usize) = match network
+        let (outbound_connections, inbound_connections, threads): (u32, u32, usize) = match network
         {
             Network::Mainnet | Network::Testnet => (10, 10, 4),
-            Network::Regtest => (1, 0, 1),
+            Network::Regtest => (0, 1, 1),
         };
 
         let only_net: p2p::IP = IP::IPV4;
 
         let port: u16 = match matches.value_of("port") {
-            Some(s) => s.parse().map_err(|_| "port is invalid".to_owned())?,
+            Some(s) => s
+                .parse()
+                .map_err(|_| String::from("port is invalid"))
+                .unwrap(),
             None => network.port(),
         };
 
         let db_cache: usize = match matches.value_of("db-cache") {
-            Some(s) => s.parse().map_err(|_| "db-cache is invalid".to_owned())?,
+            Some(s) => s
+                .parse()
+                .map_err(|_| String::from("db-cache is invalid"))
+                .unwrap(),
             None => 512,
         };
 
-        let ua: String = String::from("/EARTH:0.0.1/");
+        let ua: String = "/EARTH:0.0.1/".into();
 
         let quiet: bool = matches.is_present("quiet");
 
         let data_dir: Option<String> = match matches.value_of("data-dir") {
-            Some(s) => Some(s.parse().map_err(|_| "Error".to_owned())?),
+            Some(s) => Some(s.parse().map_err(|_| String::from("Error")).unwrap()),
             None => None,
         };
 
         let seeders: Vec<String> = match matches.value_of("seednode") {
-            Some(s) => vec![s.parse().map_err(|_| "Error".to_owned())?],
+            Some(s) => vec![s.parse().map_err(|_| String::from("Error")).unwrap()],
             None => match network {
                 Network::Mainnet => mainnet_seeders(),
                 Network::Testnet | Network::Regtest => testnet_seeders(),
@@ -98,7 +111,7 @@ impl Configuration {
                 Err(_) => s
                     .parse::<net::IpAddr>()
                     .map(|ip| net::SocketAddr::new(ip, network.port()))
-                    .map_err(|_| "Invalid connect".to_owned()),
+                    .map_err(|_| String::from("Invalid connect")),
                 Ok(a) => Ok(a),
             }?),
             None => None,
@@ -111,12 +124,17 @@ impl Configuration {
         let host: IpAddr = match matches.value_of("host") {
             Some(s) => s
                 .parse::<net::IpAddr>()
-                .map_err(|_| "Invalid host".to_owned())?,
+                .map_err(|_| String::from("Invalid host"))?,
             None => match only_net {
                 IP::IPV6 => "::".parse().unwrap(),
                 _ => "0.0.0.0".parse().unwrap(),
             },
         };
+
+        let rpc_config: HttpConfig = RPC::parse_rpc_config(network, matches).unwrap();
+        let block_notify_command = Some("foo".into());
+        let verification_params = ();
+        let db = ();
 
         Ok(Configuration {
             network: network,
@@ -134,6 +152,10 @@ impl Configuration {
             ip: only_net,
             services: services,
             host: host,
+            rpc_config: rpc_config,
+            block_notify_command: block_notify_command,
+            verification_params: verification_params,
+            db: db,
         })
     }
 }
