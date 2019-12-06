@@ -2,7 +2,7 @@ use crate::{mainnet_seeders, testnet_seeders};
 use clap;
 use core::option::Option;
 use network::Network;
-use p2p::{ConsensusParams, Deployment, IP};
+use p2p::{ConsensusParams, IP};
 use std::net;
 use std::net::SocketAddr;
 // use std::collections::hash_map::DefaultHasher;
