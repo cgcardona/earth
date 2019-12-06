@@ -1,11 +1,7 @@
 use crate::Configuration;
-use blockchain::Block;
-use database::Storage;
-use mock_data::block_mock_data;
 use p2p::Config;
-use p2p::{NetConfig, P2P};
+use p2p::{P2P};
 use std::{fs, path::PathBuf};
-use tokio_core::reactor::{Core, Handle};
 
 // use crate::seeders::{mainnet_seeders, testnet_seeders};
 // use blockchain::Block;
@@ -38,7 +34,7 @@ fn start_db(c: &Configuration) {
         None => create_data_dir("data-dir", "db"),
     };
 
-    let data_dir: String = match c.data_dir {
+    let _data_dir: String = match c.data_dir {
         Some(ref data_dir) => String::from(data_dir),
         None => String::from("data-dir"),
     };
